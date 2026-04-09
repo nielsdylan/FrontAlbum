@@ -1,0 +1,21 @@
+// body {
+//     position: relative;
+//     overflow-x: hidden;
+//     overflow-y: visible;
+//     background-color: #ffffff;
+// }
+
+body {
+    font-family: 'Public Sans', sans-serif;
+}
+
+.glass-card {
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.hero-gradient {
+    background: radial-gradient(circle at top right, rgba(112, 0, 255, 0.05), transparent),
+        radial-gradient(circle at bottom left, rgba(93, 230, 25, 0.05), transparent);
+}
