@@ -29,16 +29,25 @@ const Home          = lazy(() => import('@/app/web/view/Home'))
 const Nosotros      = lazy(() => import('@/app/web/view/Nosotros'))
 const Contacto      = lazy(() => import('@/app/web/view/Contacto'))
 // -------------
-// COMPONENTES DEL PANEL DE CONTROL --------------------------
+// COMPONENTES DEL PANEL DE CONTROL ALBUM--------------------------
 const AdminLayout   = lazy(() => import('@/app/panel-control/layouts/AdminLayout'))
 const PublicLayout   = lazy(() => import('@/app/web/layouts/PublicLayout'))
-// const SlidersPC   = lazy(() => import('@/app/panel-control/view/slider/ListSliders'))
 const ServiciosPC   = lazy(() => import('@/app/panel-control/view/servicios/ListServicios'))
 const ColaboradoresPC   = lazy(() => import('@/app/panel-control/view/colaborador/ListColaboradores'))
+
+const Albumes   = lazy(() => import('@/app/panel-control/view/galeria/Albumes'))
 // CONFIGURACION DE RUTAS-------------
 const dashboardRoutes: RouteObject[] = [
     { path: 'dashboard', element: <Dashboard/> },
-    // { path: 'sliders', element: <SlidersPC/> },
+    {
+        path: 'galeria',
+        children: [
+            { path: 'fotos', element: <Albumes /> },
+            { path: 'albumes', element: <Albumes /> },
+        ],
+    },
+
+
     { path: 'servicios', element: <ServiciosPC/> },
     { path: 'colaboradores', element: <ColaboradoresPC/> },
     {

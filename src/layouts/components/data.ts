@@ -119,8 +119,8 @@ export const menuItems: MenuItemType[] = [
     label: 'Galeria',
     icon: LuPanelTop,
     children: [
-      { key: 'dark-topbar', label: 'Fotos', url: '/galeria/fotos' },
-      { key: 'dark-topbar', label: 'Album', url: '/galeria/album' },
+      { key: 'dark-topbar', label: 'Fotos', url: '/panel-control/galeria/fotos' },
+      { key: 'dark-topbar', label: 'Albumes', url: '/panel-control/galeria/albumes' },
     ],
   },
   // ------------------------------------------
