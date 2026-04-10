@@ -10,8 +10,6 @@ import PublicRoute from '@/app/panel-control/services/auth/PublicRoute'
 // RUTAS DE LOS COMPONENTES --------------------------
 const Auth2SignIn   = lazy(() => import('@/app/panel-control/auth/index'))
 const Dashboard     = lazy(() => import('@/views/dashboards/dashboard'))
-const ListClient    = lazy(() => import('@/app/panel-control/view/configuration/clients/ListClient'))
-const ListNiveles = lazy(() => import('@/app/panel-control/view/configuration/Niveles/ListNiveles'))
 
 
 // -------------
@@ -32,8 +30,6 @@ const Contacto      = lazy(() => import('@/app/web/view/Contacto'))
 // COMPONENTES DEL PANEL DE CONTROL ALBUM--------------------------
 const AdminLayout   = lazy(() => import('@/app/panel-control/layouts/AdminLayout'))
 const PublicLayout   = lazy(() => import('@/app/web/layouts/PublicLayout'))
-const ServiciosPC   = lazy(() => import('@/app/panel-control/view/servicios/ListServicios'))
-const ColaboradoresPC   = lazy(() => import('@/app/panel-control/view/colaborador/ListColaboradores'))
 
 const Albumes   = lazy(() => import('@/app/panel-control/view/galeria/Albumes'))
 // CONFIGURACION DE RUTAS-------------
@@ -44,17 +40,6 @@ const dashboardRoutes: RouteObject[] = [
         children: [
             { path: 'fotos', element: <Albumes /> },
             { path: 'albumes', element: <Albumes /> },
-        ],
-    },
-
-
-    { path: 'servicios', element: <ServiciosPC/> },
-    { path: 'colaboradores', element: <ColaboradoresPC/> },
-    {
-        path: 'configuracion',
-        children: [
-            { path: 'clientes', element: <ListClient /> },
-            { path: 'niveles', element: <ListNiveles /> },
         ],
     },
 ]

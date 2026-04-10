@@ -124,33 +124,7 @@ export const menuItems: MenuItemType[] = [
     ],
   },
   // ------------------------------------------
-  // menu de la pagina web
-  { key: 'navigation',    label: 'Aplicaciones',  isTitle: true },
-  { key: 'slider',        label: 'Slider',        icon: LuCircleGauge, url: '/panel-control/sliders' },
-  { key: 'servicios',     label: 'Servicios',     icon: LuCircleGauge, url: '/panel-control/servicios' },
-  { key: 'colaboradores', label: 'Colaboradores', icon: LuCircleGauge, url: '/panel-control/colaboradores' },
-  // {
-  //   key: 'galeria',
-  //   label: 'Galeria',
-  //   icon: LuPanelTop,
-  //   children: [
-  //     { key: 'dark-topbar', label: 'Album', url: '/galeria/album' },
-  //   ],
-  // },
-  // { key: 'plantillas', label: 'Plantillas', icon: LuCircleGauge, url: '/plantillas' },
-  { key: 'admin', label: 'Administrador', isTitle: true },
-  {
-    key: 'configuration',
-    label: 'Configuración',
-    icon: LuPanelTop,
-    children: [
-      { key: 'dark-topbar', label: 'Clientes', url: '/configuracion/clientes' },
-      { key: 'dark-topbar', label: 'Habitaciones', url: '/configuracion/habitaciones' },
-      { key: 'dark-topbar', label: 'Categorías', url: '/configuracion/categorias' },
-      { key: 'dark-topbar', label: 'Niveles', url: '/configuracion/niveles' },
-      { key: 'dark-topbar', label: 'Tarifas', url: '/panel-control/configuracion/tarifas' },
-    ],
-  },
+  
 ]
 
 export const horizontalMenuItems: MenuItemType[] = [
