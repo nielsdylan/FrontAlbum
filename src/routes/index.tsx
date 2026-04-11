@@ -31,7 +31,8 @@ const Contacto      = lazy(() => import('@/app/web/view/Contacto'))
 const AdminLayout   = lazy(() => import('@/app/panel-control/layouts/AdminLayout'))
 const PublicLayout   = lazy(() => import('@/app/web/layouts/PublicLayout'))
 
-const Albumes   = lazy(() => import('@/app/panel-control/view/galeria/Albumes'))
+const Albumes   = lazy(() => import('@/app/panel-control/view/galeria/Albumes/Albumes'))
+const AlbumDetalle   = lazy(() => import('@/app/panel-control/view/galeria/Albumes/AlbumDetalle'))
 // CONFIGURACION DE RUTAS-------------
 const dashboardRoutes: RouteObject[] = [
     { path: 'dashboard', element: <Dashboard/> },
@@ -40,6 +41,7 @@ const dashboardRoutes: RouteObject[] = [
         children: [
             { path: 'fotos', element: <Albumes /> },
             { path: 'albumes', element: <Albumes /> },
+            { path: 'albumes/:id', element: <AlbumDetalle /> }
         ],
     },
 ]
