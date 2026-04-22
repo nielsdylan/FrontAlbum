@@ -1,57 +1,205 @@
 import ComponentCard from '@/components/cards/ComponentCard'
 import PageBreadcrumb from "@/components/PageBreadcrumb"
-import { Col, Container, FormControl, FormLabel, Row, Form } from "react-bootstrap"
+import { Col, Container, FormControl, FormLabel, Row, Form, CardFooter, Button } from "react-bootstrap"
 import addImage from '@/app/assets/images/add-image.jpg'
-
-const NuevaFoto = () => {
-  return (
-    <div>
- 
-      <Container fluid>
-        <PageBreadcrumb title="Agregar nueva foto" subtitle="" />
-        <Row className="justify-content-center">
-            <Col xxl={8}>
-                <ComponentCard title="Crear nuevo registro">
-                    <Row>
-                        <Col xxl={6}>
-                            <Form.Group className="mb-3" >
-                                <FormLabel htmlFor="titulo">Titulo</FormLabel>
-                                <FormControl type="text" id="titulo" />
-                            </Form.Group>                            
-                        </Col>
-                        <Col xxl={6}>
-                            <Form.Group className="mb-3" >
-                                <FormLabel htmlFor="album">Album</FormLabel>
-                                <FormControl type="text" id="album" />
-                            </Form.Group>
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col xxl={6}>
-                            <Form.Group className="mb-3" >
-                                <FormLabel htmlFor="descripcion">Descripción</FormLabel>
-                                <FormControl as="textarea" id="descripcion" rows={6} />
-                            </Form.Group>                            
-                        </Col>
-                        <Col xxl={6}>
-                            <p>Agrege una imagen</p>
-                            <img 
-                                src={addImage} 
-                                alt="Imagen cargada" 
-                                className="img-thumbnail shadow"
-                                style={{ maxHeight: '200px' }} 
-                            />
-                        </Col>
-                    </Row>
-                </ComponentCard>
-            </Col>
-
-        </Row>
-
-
-      </Container>
-    </div>
-  )
+import { useEffect, useRef, useState, type ChangeEvent } from 'react';
+import { LuSave } from 'react-icons/lu';
+import { allAlbumes, guardarData } from '@/app/panel-control/services/galeria/AlbumServices';
+import type { Album } from '@/app/panel-control/interface/galeria/Album';
+import Select from "react-select";
+type OptionType = {
+  label: string
+  value: string
 }
+const NuevaFoto = () => {
+    // variable donde se guarda el formulario
+    const [formData, setFormData] = useState({ id: 0, titulo: "", album_id: "", descripcion:"", imagen: null as File | null | string }); 
+    // const [albumesData, setAlbumesData] = useState<Album[]>([]);
+    const [options, setOptions] = useState<OptionType[]>([]);
+    // Referencia al input de tipo file (oculto)
+    const fileInputRef = useRef<HTMLInputElement>(null);
+    
+    // Estado para la imagen (inicia con la imagen por defecto)
+    const [imagePreview, setImagePreview] = useState(addImage);
+
+    const handleImageClick = () => {
+        // Al hacer clic en la imagen, activamos el clic del input oculto
+        fileInputRef.current?.click();
+    };
+
+
+    useEffect(() => {
+        Albumes();
+    }, [/* 3. Arreglo de dependencias */]);
+
+    const Albumes = async () => {
+        const respons = await allAlbumes();
+        // Transformamos los datos de la API al formato del Select
+        const nuevasOpciones = respons.map((album: Album) => ({
+            value: album.id.toString(),
+            label: album.titulo // O la propiedad que tenga el título del álbum
+        }));
+
+        // Guardamos las opciones ya transformadas
+        setOptions(nuevasOpciones);
+    }
+
+    const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
+        const file = event.target.files?.[0];
+        if (file) {
+            // Creamos una URL temporal para mostrar la imagen seleccionada
+            // const reader = new FileReader();
+            // reader.onloadend = () => {
+            //     setImagePreview(reader.result);
+            // };
+            // reader.readAsDataURL(file);
+             const imageUrl = URL.createObjectURL(file);
+            setImagePreview(imageUrl);
+            // console.log(file);
+            
+        }
+    };
+
+    // EVENTO DE GUARDAR
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault(); // Evita que se recargue la página
+        // creamos una variable para envair el formData porque enviamos archivo file porque si no enviamos directo la variable
+        const data = new FormData(); // OBLIGATORIO
+    
+        data.append("id", formData.id.toString());
+        data.append("titulo", formData.titulo);
+        data.append("album_id", formData.album_id);
+        
+        // Verifica que formData.imagen sea un objeto FILE, no un string
+        if (formData.imagen instanceof File) {
+            data.append("imagen", formData.imagen);
+        }
+        console.log(data);
+        
+        const respons = await guardarData(data);
+        console.log(respons);
+        // const respons = await guardarData(formData); // solo cuando no se envia imagen
+        // fetchLista(currentPage);
+        // toggleModal();
+        // sweet({
+        //     title: respons.title,
+        //     icon: respons.icon,
+        //     text: respons.text,
+        //     customClass: { confirmButton: "btn btn-" + respons.icon },
+        // });
+    };
+
+    // EVENTO DON CONVIERTO EL FORMULARIO EN UN JSON
+    const handleChange = ( e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement> ) => {
+        const { name, value } = e.target;
+
+        // Si es un input de archivo, extraemos el primer archivo seleccionado
+        if (e.target instanceof HTMLInputElement && e.target.type === 'file') {
+            const file = e.target.files ? e.target.files[0] : null;
+            setFormData((prev) => ({
+                ...prev,
+                [name]: file, // Guardamos el objeto File, no un string
+            }));
+        } else {
+            setFormData((prev) => ({
+                ...prev,
+                [name]: value,
+            }));
+        }
+        console.log(formData);
+        
+    };
+
+    return (
+        <div>
+            <Container fluid>
+                <PageBreadcrumb title="Agregar nueva foto" subtitle="" />
+                <Row className="justify-content-center">
+                    <Col xxl={8}>
+                        <form onSubmit={handleSubmit}>
+                            <ComponentCard title="Crear nuevo registro">
+                                <Row>
+                                    <Col xxl={6}>
+                                        <Form.Group className="mb-3">
+                                            <FormLabel htmlFor="titulo">Titulo</FormLabel>
+                                            <FormControl type="text" id="titulo" name="titulo" value={formData.titulo} onChange={handleChange} />
+                                        </Form.Group>
+                                    </Col>
+                                    <Col xxl={6}>
+                                        <Form.Group className="mb-3">
+                                            <FormLabel htmlFor="album_id">Album</FormLabel>
+                                            {/* <FormControl type="text" id="album_id" name="album_id" value={formData.album_id} onChange={handleChange} required /> */}
+                                            
+                                            <Select
+                                                className="react-select"
+                                                classNamePrefix={'react-select'}
+                                                placeholder="Seleccione..."
+                                                options={options}
+                                                value={options.find(opt => opt.value === formData.album_id) || null}
+                                                // onChange={(val) => setSingleDefault(val as OptionType)}
+                                                onChange={(val) => {
+                                                    const selectedOption = val as OptionType | null;
+                                                    setFormData((prev) => ({
+                                                        ...prev,
+                                                        album_id: selectedOption ? selectedOption.value : ""
+                                                    }));
+                                                    console.log(formData);
+                                                    
+                                                }}
+                                            />
+                                        </Form.Group>
+                                    </Col>
+                                </Row>
+                                <Row>
+                                    <Col xxl={6}>
+                                        <Form.Group className="mb-3">
+                                            <FormLabel htmlFor="descripcion">Descripción</FormLabel>
+                                            <FormControl as="textarea" id="descripcion" name="descripcion" value={formData.descripcion} onChange={handleChange} rows={6} />
+                                        </Form.Group>
+                                    </Col>
+                                    <Col xxl={6}>
+                                        <p>Agregue una imagen</p>
+                                        
+                                        {/* Input File oculto */}
+                                        <input
+                                            type="file"
+                                            ref={fileInputRef}
+                                            style={{ display: 'none' }}
+                                            accept="image/*"
+                                            onChange={handleFileChange}
+                                            name="imagen"
+                                            required
+                                        />
+
+                                        {/* Imagen que actúa como disparador */}
+                                        <img
+                                            onClick={handleImageClick}
+                                            src={imagePreview}
+                                            alt="Imagen cargada"
+                                            className="img-thumbnail shadow"
+                                            style={{ 
+                                                maxHeight: '200px', 
+                                                cursor: 'pointer',
+                                                objectFit: 'cover' 
+                                            }}
+                                        />
+                                    </Col>
+                                </Row>
+                                <Row>
+                                    <Col xxl={12} className="text-end">
+                                        <Button variant="success" type="submit" className="btn-sm">
+                                        {" "}
+                                        <LuSave /> Guardar{" "}
+                                        </Button>
+                                    </Col>
+                                </Row>
+                            </ComponentCard>
+                        </form>
+                    </Col>
+                </Row>
+            </Container>
+        </div>
+    );
+};
 
 export default NuevaFoto
