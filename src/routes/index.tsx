@@ -43,6 +43,7 @@ const dashboardRoutes: RouteObject[] = [
         children: [
             { path: 'fotos', element: <Fotos /> },
             { path: 'fotos/nueva-foto', element: <NuevaFoto /> },
+            { path: 'fotos/editar-foto/:id', element: <NuevaFoto /> },
             { path: 'albumes', element: <Albumes /> },
             { path: 'albumes/:id', element: <AlbumDetalle /> }
         ],

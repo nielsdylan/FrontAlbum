@@ -13,7 +13,7 @@ import addImage from "@/app/assets/images/add-image.jpg";
 import { useEffect, useRef, useState } from "react";
 import { LuSave } from "react-icons/lu";
 import { allAlbumes } from "@/app/panel-control/services/galeria/AlbumServices";
-import { guardarData } from "@/app/panel-control/services/galeria/FotoService";
+import { guardarData, verData } from "@/app/panel-control/services/galeria/FotoService";
 import type { Album } from "@/app/panel-control/interface/galeria/Album";
 import Select from "react-select";
 type OptionType = {
@@ -22,10 +22,11 @@ type OptionType = {
 };
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
-import { useNavigate } from "react-router";
+import { useNavigate, useParams } from "react-router";
 const ReactSwal = withReactContent(Swal);
 const NuevaFoto = () => {
-    const navigate = useNavigate();
+  const { id } = useParams();
+  const navigate = useNavigate();
   // variable donde se guarda el formulario
   const [formData, setFormData] = useState({
     id: 0,
@@ -54,12 +55,21 @@ const NuevaFoto = () => {
   useEffect(
     () => {
       Albumes();
+      if (id) {
+        buscarRegistro();
+      }
+      
     },
     [
       /* 3. Arreglo de dependencias */
     ],
   );
-
+  // OBTENER REGISTRO
+  const buscarRegistro = async () => {
+    const respons = await verData(Number(id));
+    console.log(respons);
+    
+  }
   const Albumes = async () => {
     const respons = await allAlbumes();
     // Transformamos los datos de la API al formato del Select
@@ -170,6 +180,7 @@ const NuevaFoto = () => {
       }));
     }
   };
+  
 
   return (
     <div>

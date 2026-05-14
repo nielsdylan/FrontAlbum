@@ -23,7 +23,7 @@ import 'simplebar-react/dist/simplebar.min.css'
 import 'sweetalert2/dist/sweetalert2.min.css'
 
 import '@/assets/scss/app.scss'
-
+import '@/app/panel-control/scss/panelControl.scss'; 
 const AdminLayout = () => {
     return (
         <div className="admin-site">
