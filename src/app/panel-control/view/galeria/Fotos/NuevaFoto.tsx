@@ -67,6 +67,13 @@ const NuevaFoto = () => {
   // OBTENER REGISTRO
   const buscarRegistro = async () => {
     const respons = await verData(Number(id));
+    setFormData((prev) => ({
+      ...prev,
+      id: respons.id,
+      titulo: respons.titulo,
+      descripcion: respons.description,
+      album_id: respons.albumes_id,
+    }));
     console.log(respons);
     
   }
@@ -179,6 +186,8 @@ const NuevaFoto = () => {
         [name]: value,
       }));
     }
+    console.log(formData);
+    
   };
   
 
@@ -189,6 +198,13 @@ const NuevaFoto = () => {
         <Row className="justify-content-center">
           <Col xxl={8}>
             <form onSubmit={handleSubmit}>
+              <FormControl
+                type="hidden"
+                id="id"
+                name="id"
+                value={formData.id}
+                onChange={handleChange}
+              />
               <ComponentCard title="Crear nuevo registro">
                 <Row>
                   <Col xxl={6}>
