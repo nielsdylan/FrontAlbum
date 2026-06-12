@@ -123,6 +123,7 @@ export const menuItems: MenuItemType[] = [
       { key: 'dark-topbar', label: 'Albumes', url: '/panel-control/galeria/albumes' },
     ],
   },
+  { key: 'plantillas', label: 'Plantillas', icon: LuCircleGauge, url: '/panel-control/plantillas' },
   // ------------------------------------------
   
 ]

@@ -35,6 +35,7 @@ const Albumes   = lazy(() => import('@/app/panel-control/view/galeria/Albumes/Al
 const AlbumDetalle   = lazy(() => import('@/app/panel-control/view/galeria/Albumes/AlbumDetalle'))
 const Fotos   = lazy(() => import('@/app/panel-control/view/galeria/Fotos/Fotos'))
 const NuevaFoto   = lazy(() => import('@/app/panel-control/view/galeria/Fotos/NuevaFoto'))
+const ListPlantilla   = lazy(() => import('@/app/panel-control/view/plantillas/ListPlantilla'))
 // CONFIGURACION DE RUTAS-------------
 const dashboardRoutes: RouteObject[] = [
     { path: 'dashboard', element: <Dashboard/> },
@@ -48,6 +49,7 @@ const dashboardRoutes: RouteObject[] = [
             { path: 'albumes/:id', element: <AlbumDetalle /> }
         ],
     },
+    { path: 'plantillas', element: <ListPlantilla/> },
 ]
 
 const errorRoutes: RouteObject[] = [

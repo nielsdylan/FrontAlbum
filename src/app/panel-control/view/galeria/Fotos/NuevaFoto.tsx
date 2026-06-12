@@ -24,6 +24,8 @@ import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import { useNavigate, useParams } from "react-router";
 const ReactSwal = withReactContent(Swal);
+const IMG_URL = import.meta.env.VITE_APP_IMG_URL;
+
 const NuevaFoto = () => {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -64,9 +66,17 @@ const NuevaFoto = () => {
       /* 3. Arreglo de dependencias */
     ],
   );
-  // OBTENER REGISTRO
+  // OBTENER REGISTRO PARA EDITAR
   const buscarRegistro = async () => {
     const respons = await verData(Number(id));
+    setFormData((prev) => ({
+      ...prev,
+      id: respons.id,
+      titulo: respons.titulo,
+      album_id: respons.albumes_id ? String(respons.albumes_id) : "",
+      descripcion: respons.description
+    }));
+    setImagePreview(IMG_URL+'/'+respons.path);
     console.log(respons);
     
   }
@@ -106,7 +116,7 @@ const NuevaFoto = () => {
       title: "¿Está seguro?",
       text: "Se guardar el registro",
       showCancelButton: true,
-      confirmButtonText: "Submit",
+      confirmButtonText: "Guardar",
       showLoaderOnConfirm: true,
       showCloseButton: true,
       buttonsStyling: false,
@@ -257,7 +267,7 @@ const NuevaFoto = () => {
                       accept="image/*"
                       onChange={handleChange}
                       name="imagen"
-                      required
+                      required={formData.id === 0 && !formData.imagen}
                     />
 
                     {/* Imagen que actúa como disparador */}
