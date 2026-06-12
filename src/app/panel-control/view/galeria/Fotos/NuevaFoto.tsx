@@ -189,6 +189,8 @@ const NuevaFoto = () => {
         [name]: value,
       }));
     }
+    console.log(formData);
+    
   };
   
 
@@ -199,6 +201,13 @@ const NuevaFoto = () => {
         <Row className="justify-content-center">
           <Col xxl={8}>
             <form onSubmit={handleSubmit}>
+              <FormControl
+                type="hidden"
+                id="id"
+                name="id"
+                value={formData.id}
+                onChange={handleChange}
+              />
               <ComponentCard title="Crear nuevo registro">
                 <Row>
                   <Col xxl={6}>
