@@ -79,7 +79,7 @@ const allRoutes: RouteObject[] = [
         ]
     },
 
-    // GRUPO PANEL DE COPNTROL (Login + Dashboard)
+    // GRUPO PANEL DE CONTROL (Login + Dashboard)
     {
         path: 'panel-control',
         element: <AdminLayout />,

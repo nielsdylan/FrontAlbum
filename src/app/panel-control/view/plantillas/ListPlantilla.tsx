@@ -2,15 +2,15 @@ import PageBreadcrumb from "@/components/PageBreadcrumb"
 import { Col, Container, Row, Card, CardBody, CardTitle } from 'react-bootstrap';
 import { Link } from "react-router";
 
-const CardPlantilla = () => {
+const CardPlantilla = ({titulo}:{titulo:string}) => {
     return (
         <Card>
             <CardBody>
                 <CardTitle as={'h5'} className="mb-2">
-                    Card with stretched link
+                    {titulo}
                 </CardTitle>
-                <Link to="" className="btn btn-primary mt-2 stretched-link">
-                    Go somewhere
+                <Link to="" className="btn btn-success mt-2">
+                    Visualizar
                 </Link>
             </CardBody>
         </Card>
@@ -24,9 +24,16 @@ const ListPlantilla = () => {
             <PageBreadcrumb title="Gestion de Plantillas" subtitle="" />
 
             <Row className="justify-content-center">
-            <Col xxl={8}>
-                <CardPlantilla />
-            </Col>
+                <Col xxl={2}>
+                    <CardPlantilla
+                        titulo="Album N°1"
+                    />
+                </Col>
+                <Col xxl={2}>
+                    <CardPlantilla
+                        titulo="Album N°2"
+                    />
+                </Col>
             </Row>
         </Container>
     </div>
