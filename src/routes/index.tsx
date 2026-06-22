@@ -52,7 +52,7 @@ const dashboardRoutes: RouteObject[] = [
             { path: 'fotos/nueva-foto', element: <NuevaFoto /> },
             { path: 'fotos/editar-foto/:id', element: <NuevaFoto /> },
             { path: 'albumes', element: <Albumes /> },
-            { path: 'albumes/:id', element: <AlbumDetalle /> }
+            // { path: 'albumes/:id', element: <AlbumDetalle /> }
         ],
     },
     { path: 'plantillas', element: <ListPlantilla/> },

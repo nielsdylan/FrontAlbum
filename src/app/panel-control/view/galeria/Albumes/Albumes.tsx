@@ -56,18 +56,6 @@ const CardTable = () => {
         const root = createRoot(cell as HTMLElement);
         root.render(
           <div className=" gap-1 ms-2 ">
-            <OverlayTrigger
-              placement="top"
-              overlay={
-                <Tooltip id={`tooltip-${rowData.id}`} className="danger-tooltip">
-                  Ver Album.
-                </Tooltip>
-              }
-            >
-              <button className="btn btn-sm btn-outline-default btn-icon rounded" onClick={() => handleVerAlbum(Number(rowData.id))}>
-                <TbEye className="fs-lg" />
-              </button>
-            </OverlayTrigger>
 
             <OverlayTrigger
               placement="top"
