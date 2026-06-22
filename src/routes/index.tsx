@@ -31,11 +31,17 @@ const Contacto      = lazy(() => import('@/app/web/view/Contacto'))
 const AdminLayout   = lazy(() => import('@/app/panel-control/layouts/AdminLayout'))
 const PublicLayout   = lazy(() => import('@/app/web/layouts/PublicLayout'))
 
+
 const Albumes   = lazy(() => import('@/app/panel-control/view/galeria/Albumes/Albumes'))
 const AlbumDetalle   = lazy(() => import('@/app/panel-control/view/galeria/Albumes/AlbumDetalle'))
 const Fotos   = lazy(() => import('@/app/panel-control/view/galeria/Fotos/Fotos'))
 const NuevaFoto   = lazy(() => import('@/app/panel-control/view/galeria/Fotos/NuevaFoto'))
 const ListPlantilla   = lazy(() => import('@/app/panel-control/view/plantillas/ListPlantilla'))
+
+// RUTAS DE LOS TEMPLATE
+const Plantilla1   = lazy(() => import('@/app/templates/plantilla1/plantilla1'))
+const Plantilla2   = lazy(() => import('@/app/templates/plantilla2/plantilla2'))
+const Plantilla3   = lazy(() => import('@/app/templates/plantilla3/plantilla3'))
 // CONFIGURACION DE RUTAS-------------
 const dashboardRoutes: RouteObject[] = [
     { path: 'dashboard', element: <Dashboard/> },
@@ -78,7 +84,12 @@ const allRoutes: RouteObject[] = [
             { path: 'contacto', element: <Contacto /> },
         ]
     },
-
+    // ---------------------------------------------------------------------------------------------------------------------
+    // RUTA PÚBLICA (Landing Page)
+    { path: 'template/plantilla1/:usuario_id', element: <Plantilla1/> },
+    { path: 'template/plantilla2/:usuario_id', element: <Plantilla2/> },
+    { path: 'template/plantilla3/:usuario_id', element: <Plantilla3/> },
+    //---------------------------------------------------------------------------------------------------------------------
     // GRUPO PANEL DE CONTROL (Login + Dashboard)
     {
         path: 'panel-control',
