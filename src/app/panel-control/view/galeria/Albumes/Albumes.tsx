@@ -1,7 +1,6 @@
 
 import PageBreadcrumb from "@/components/PageBreadcrumb"
-import { Button, Col, Container, FormControl, FormLabel, Modal, ModalBody, ModalFooter, ModalHeader, ModalTitle, OverlayTrigger, Pagination, Row, Tooltip } from "react-bootstrap"
-
+import { Button, Col, Container, FormControl, FormLabel, Modal, ModalBody, ModalFooter, ModalHeader, ModalTitle, OverlayTrigger, Pagination, Row, Tooltip, Form } from "react-bootstrap"
 //necesario para el data table-----
 import DT from 'datatables.net-bs5'
 import DataTable, {type  DataTableRef } from 'datatables.net-react'
@@ -24,6 +23,8 @@ import { listarData, guardarData, inactivarData, verData } from '@/app/panel-con
 // import type { Servicio } from "../../interface/Servicio"
 import type { Album } from "@/app/panel-control/interface/galeria/Album"
 import { useNavigate } from "react-router"
+import { listasPlantillas } from "@/app/panel-control/services/PlantillaService"
+import type { Plantilla } from "@/app/panel-control/interface/Plantilla"
 
 
 const CardTable = () => {
@@ -89,7 +90,7 @@ const CardTable = () => {
     }
   ]
   // DECLARAMOS LAS VARIABLES USESTATE
-  const [formData, setFormData] = useState({ id: 0, titulo: "", descripcion:"" }); // variable donde se guarda el formulario 
+  const [formData, setFormData] = useState({ id: 0, titulo: "", descripcion:"", palabras:"", plantilla_id: 0 }); // variable donde se guarda el formulario 
   const [dataJson, setDataJson] = useState<Album[]>([]); // donde se guarda el json que se trae del backend
   // ------- Control del estado de pagionas 
   const [currentPage, setCurrentPage] = useState(1);
@@ -124,6 +125,7 @@ const CardTable = () => {
         tableApi.off('length.dt');
       };
     }
+    getPlantillas();
     // fetchLista(currentPage);
   }, [currentPage, perPage]);
 
@@ -184,7 +186,9 @@ const CardTable = () => {
     setFormData({
       id: id, // Asegúrate de que 'nombre' exista en el objeto Nivel
       titulo: "", // Asegúrate de que 'nombre' exista en el objeto Nivel
-      descripcion:""
+      descripcion:"",
+      palabras:"",
+      plantilla_id: 0
       
     });
     setTextModal("Nuevo Album")
@@ -223,7 +227,9 @@ const CardTable = () => {
     setFormData({
       id: respons.id, // Asegúrate de que 'nombre' exista en el objeto Nivel
       titulo: respons.titulo, // Asegúrate de que 'nombre' exista en el objeto Nivel
-      descripcion: respons.descripcion
+      descripcion: respons.descripcion,
+      palabras: respons.palabras,
+      plantilla_id: respons.plantilla_id
     });
     setTextModal("Editar Album")
     
@@ -266,6 +272,11 @@ const CardTable = () => {
   const handleVerAlbum =  (id: number) => {
     // redireccionaremos al album apra agregar fotos
     navigate("/panel-control/galeria/albumes/"+id);
+  }
+  const getPlantillas = async () => {
+    const respons: Plantilla = await listasPlantillas();
+    console.log(respons);
+    
   }
   return (
     <ComponentCard title="Lista de Albumes">
@@ -388,6 +399,22 @@ const CardTable = () => {
           <ModalBody>
             <div className="row">
               <div className="col-md-12">
+                <FormLabel htmlFor="plantilla" className="col-form-label">
+                  Plantilla:
+                </FormLabel>
+                <Form.Select 
+                  id="plantilla"
+                  name="plantilla"
+                >
+                  <option>Seleccione...</option>
+                  <option value="1">One</option>
+                  <option value="2">Two</option>
+                  <option value="3">Three</option>
+                </Form.Select>
+              </div>
+            </div>
+            <div className="row">
+              <div className="col-md-12">
                 <FormLabel htmlFor="titulo" className="col-form-label">
                   Titulo:
                 </FormLabel>
@@ -403,6 +430,7 @@ const CardTable = () => {
                 />
               </div>
             </div>
+            
             <div className="row">
               <div className="col-md-12">
                 <FormLabel htmlFor="descripcion" className="col-form-label">
@@ -417,6 +445,25 @@ const CardTable = () => {
                   name="descripcion"
                   placeholder="Ingresa tu descripcion..."
                   value={formData.descripcion}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+            </div>
+            <div className="row">
+              <div className="col-md-12">
+                <FormLabel htmlFor="palabras" className="col-form-label">
+                  Reseña/Palabras:
+                </FormLabel>
+                
+                <FormControl
+                  as="textarea"
+                  type="file"
+                  className="form-control form-control-sm"
+                  id="palabras"
+                  name="palabras"
+                  placeholder="Ingresa tu descripcion..."
+                  value={formData.palabras}
                   onChange={handleChange}
                   required
                 />
