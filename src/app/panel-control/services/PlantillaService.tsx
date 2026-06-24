@@ -8,7 +8,7 @@ const token = localStorage.getItem(TOKEN_KEY);
 
 export const listasPlantillas = async () => {
   try {
-    const response = await axios.get(API_URL + "/panel-control/galeria/fotos/ver", {
+    const response = await axios.get(API_URL + "/panel-control/plantillas/lista", {
       headers: {
         Authorization: `Bearer ${token}`, // Send the token in the Authorization header
       },

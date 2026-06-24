@@ -102,12 +102,14 @@ const CardTable = () => {
   const [textModal, setTextModal] = useState("");
   const { isTrue: isOpen, toggle: toggleModal } = useToggle(); // variable para abrir y cerrar el modal
   const navigate = useNavigate();
+  const [listaPlantillas, setListaPlantillas] = useState<Plantilla[]>([]);
 
   DataTable.use(DT)
   const tableRef = useRef<DataTableRef | null>(null)
   // ---- evento que carga al inciar la pagian useEffect --
   useEffect(() => {
-    
+
+    getPlantillas();
     fetchLista(currentPage, perPage); // evento que se ejecuta para traer la data del backend
     if (tableRef.current && tableRef.current.dt) {
       const tableApi = tableRef.current?.dt() as any;
@@ -125,7 +127,7 @@ const CardTable = () => {
         tableApi.off('length.dt');
       };
     }
-    getPlantillas();
+    
     // fetchLista(currentPage);
   }, [currentPage, perPage]);
 
@@ -164,7 +166,7 @@ const CardTable = () => {
   * funciones ejm. crear editar eliminar etc -----------------
   */
   // EVENTO DON CONVIERTO EL FORMULARIO EN UN JSON
-  const handleChange = ( e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement> ) => {
+  const handleChange = ( e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement> ) => {
     const { name, value } = e.target;
 
     // Si es un input de archivo, extraemos el primer archivo seleccionado
@@ -274,8 +276,8 @@ const CardTable = () => {
     navigate("/panel-control/galeria/albumes/"+id);
   }
   const getPlantillas = async () => {
-    const respons: Plantilla = await listasPlantillas();
-    console.log(respons);
+    const respons: Plantilla[] = await listasPlantillas();
+    setListaPlantillas(respons);
     
   }
   return (
@@ -399,17 +401,22 @@ const CardTable = () => {
           <ModalBody>
             <div className="row">
               <div className="col-md-12">
-                <FormLabel htmlFor="plantilla" className="col-form-label">
+                <FormLabel htmlFor="plantilla_id" className="col-form-label">
                   Plantilla:
                 </FormLabel>
                 <Form.Select 
-                  id="plantilla"
-                  name="plantilla"
+                  id="plantilla_id"
+                  name="plantilla_id"
+                  value={formData.plantilla_id} // 1. Vincula el valor al estado del formulario
+                  onChange={handleChange}     // 2. Escucha los cambios cuando el usuario seleccione otra
+                  className="form-select form-select-sm"
                 >
                   <option>Seleccione...</option>
-                  <option value="1">One</option>
-                  <option value="2">Two</option>
-                  <option value="3">Three</option>
+                  {listaPlantillas.map((plantilla) => (
+                    <option key={plantilla.id} value={plantilla.id}>
+                      {plantilla.titulo}
+                    </option>
+                  ))}
                 </Form.Select>
               </div>
             </div>
