@@ -41,66 +41,105 @@ const plantilla1 = () => {
     const { usuario_id } = useParams<Record<string, string | undefined>>();
     const [dataJson, setDataJson] = useState<Image[]>([]);
     useEffect(() => {
-    listaFotos(usuario_id);
-    // 2. IMPORTACIÓN DE JAVASCRIPT
-    // Como tus archivos JS están en "templates/plantilla1/assets/js/", la ruta relativa correcta
-    // para subirlos dinámicamente desde este archivo (que está en layouts/) es saliendo una carpeta hacia atrás.
-    // la ruta en la que esta los scripts son en "public/template/plantilla1/assets/js/"
-    const scripts = [
-        "../plantilla1/assets/js/jquery.js", // Siempre primero
-        "../plantilla1/assets/js/waypoints.js",
-        "../plantilla1/assets/js/modernizr.js",
-        "../plantilla1/assets/js/bootstrap.bundle.min.js",
-        "../plantilla1/assets/js/meanmenu.js",
-        "../plantilla1/assets/js/swiper-bundle.js",
-        "../plantilla1/assets/js/slick.js",
-        "../plantilla1/assets/js/magnific-popup.js",
-        "../plantilla1/assets/js/counterup.js",
-        "../plantilla1/assets/js/wow.js",
-        "../plantilla1/assets/js/nice-select.js",
-        "../plantilla1/assets/js/isotope-pkgd.js",
-        "../plantilla1/assets/js/imagesloaded-pkgd.js",
-        "../plantilla1/assets/js/ajax-form.js",
-        "../plantilla1/assets/js/headline.js",
-        "../plantilla1/assets/js/tilt.jquery.min.js",
-        "../plantilla1/assets/js/main.js" // Al final para activar la plantilla
-    ];
+        
+        // 2. IMPORTACIÓN DE JAVASCRIPT
+        // Como tus archivos JS están en "templates/plantilla1/assets/js/", la ruta relativa correcta
+        // para subirlos dinámicamente desde este archivo (que está en layouts/) es saliendo una carpeta hacia atrás.
+        // la ruta en la que esta los scripts son en "public/template/plantilla1/assets/js/"
+        const scripts = [
+            "../plantilla1/assets/js/jquery.js", // Siempre primero
+            "../plantilla1/assets/js/waypoints.js",
+            "../plantilla1/assets/js/modernizr.js",
+            "../plantilla1/assets/js/bootstrap.bundle.min.js",
+            "../plantilla1/assets/js/meanmenu.js",
+            "../plantilla1/assets/js/swiper-bundle.js",
+            "../plantilla1/assets/js/slick.js",
+            "../plantilla1/assets/js/magnific-popup.js",
+            "../plantilla1/assets/js/counterup.js",
+            "../plantilla1/assets/js/wow.js",
+            "../plantilla1/assets/js/nice-select.js",
+            "../plantilla1/assets/js/isotope-pkgd.js",
+            "../plantilla1/assets/js/imagesloaded-pkgd.js",
+            "../plantilla1/assets/js/ajax-form.js",
+            "../plantilla1/assets/js/headline.js",
+            "../plantilla1/assets/js/tilt.jquery.min.js",
+            "../plantilla1/assets/js/main.js" // Al final para activar la plantilla
+        ];
 
-    const loadedScriptElements: HTMLScriptElement[] = [];
+        const loadedScriptElements: HTMLScriptElement[] = [];
 
-    const loadScriptsSequentially = (index: number) => {
-        if (index >= scripts.length) return;
+        const loadScriptsSequentially = (index: number) => {
+            if (index >= scripts.length) return;
 
-        const src = scripts[index];
+            const src = scripts[index];
 
-        if (document.querySelector(`script[src="${src}"]`)) {
-        loadScriptsSequentially(index + 1);
-        return;
-        }
+            if (document.querySelector(`script[src="${src}"]`)) {
+            loadScriptsSequentially(index + 1);
+            return;
+            }
 
-        const script = document.createElement("script");
-        script.src = src;
-        script.async = false;
+            const script = document.createElement("script");
+            script.src = src;
+            script.async = false;
 
-        script.onload = () => {
-        loadScriptsSequentially(index + 1);
+            script.onload = () => {
+            loadScriptsSequentially(index + 1);
+            };
+
+            document.body.appendChild(script);
+            loadedScriptElements.push(script);
         };
 
-        document.body.appendChild(script);
-        loadedScriptElements.push(script);
-    };
+        loadScriptsSequentially(0);
 
-    loadScriptsSequentially(0);
-
-    // Limpieza al salir de la página
-    return () => {
-        loadedScriptElements.forEach((script) => {
-        if (document.body.contains(script)) {
-            document.body.removeChild(script);
-        }
-        });
-    };
+        // Limpieza al salir de la página
+        return () => {
+            loadedScriptElements.forEach((script) => {
+            if (document.body.contains(script)) {
+                document.body.removeChild(script);
+            }
+            });
+        };
     }, []);
+
+    useEffect(() => {
+        if (usuario_id) {
+            listaFotos(usuario_id);
+        }
+    }, [usuario_id]); // Solo se ejecuta si cambia el ID del usuario
+
+    useEffect(() => {
+        // Comprobamos si el array ya tiene fotos y si jQuery está disponible en el objeto global window
+        if (dataJson.length > 0 && (window as any).$) {
+            const $ = (window as any).$;
+            
+            // Inicializamos Magnific Popup directamente sobre tus elementos renderizados
+            $('.ptg-portfilo').magnificPopup({
+                type: 'image',
+                gallery: {
+                    enabled: true // Si quieres que permita avanzar (siguiente/anterior) entre las fotos
+                },
+                mainClass: 'mfp-fade', // Clase de animación típica de estas plantillas
+            });
+        }
+
+        if (dataJson && dataJson.length > 0) {
+    
+            // Usamos un pequeño setTimeout (ej. 150ms) para asegurarnos de que 
+            // React haya terminado de dibujar los elementos en el DOM real.
+            const timer = setTimeout(() => {
+            if (window.$ && typeof window.$.fn.tilt !== 'undefined') {
+                // Ejecutamos el plugin sobre todos los elementos con data-tilt
+                window.$('[data-tilt]').tilt({
+                perspective: 2000
+                });
+                console.log("Tilt reactivado exitosamente en las fotos dinámicas");
+            }
+            }, 150);
+
+            return () => clearTimeout(timer);
+        }
+    }, [dataJson]);
 
     const listaFotos = async (id: number) => {
         const respons: Image[] = await todasFotos(id);
@@ -577,48 +616,45 @@ const plantilla1 = () => {
                         </div>
                         <div className="container">
                             <div className="row align-items-center">
-                                <div className="col-lg-6">
-                                    <div className="ptg-portfolio-item mb-30  p-relative wow tpfadeUp" data-wow-delay=".3s">
-                                        <div className="ptg-portfolio-item-img pta-pt-img-large" data-tilt data-tilt-perspective="2000">
-                                            <a href={portfolio1} className="ptg-portfilo">
-                                                <img src={portfolio1} alt="pt1" />
-                                            </a>
-                                        </div>
-                                        <div className="ptg-portfolio-item-info">
-                                            <span className="ptg-portfolio-item-subtitle">Landscaping, Outdoor</span>
-                                            <h3 className="ptg-portfolio-item-title"><a href="#">oliza pablo photo</a></h3>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="col-lg-6">
-                                    <div className="ptg-portfolio-item mb-30  p-relative wow tpfadeUp" data-wow-delay=".4s">
-                                        <div className="ptg-portfolio-item-img text-center" data-tilt data-tilt-perspective="2000">
-                                            <a href={portfolio2} className="ptg-portfilo">
-                                                <img src={portfolio2} alt="pt2" />
-                                            </a>
-                                        </div>
-                                        <div className="ptg-portfolio-item-info">
-                                            <span className=" ptg-portfolio-item-subtitle">Landscaping, Outdoor</span>
-                                            <h3 className="ptg-portfolio-item-title"><a href="#">oliza pablo photo</a></h3>
-                                        </div>
-                                    </div>
-                                </div>
-                                 {dataJson.map((data, index: number) => (
-                                    <div className="col-lg-6" key={data.id}>
-                                        <div className="ptg-portfolio-item mb-30  p-relative wow tpfadeUp" data-wow-delay=".3s">
-                                            <div className="ptg-portfolio-item-img pta-pt-img-large" data-tilt data-tilt-perspective="2000">
-                                                <a href={IMG_URL+'/'+data.path} className="ptg-portfilo">
-                                                    <img src={IMG_URL+'/'+data.path} alt="pt1" />
-                                                </a>
-                                            </div>
-                                            <div className="ptg-portfolio-item-info">
-                                                <span className="ptg-portfolio-item-subtitle">Landscaping, Outdoor</span>
-                                                <h3 className="ptg-portfolio-item-title"><a href="#">oliza pablo photo</a></h3>
-                                            </div>
-                                        </div>
-                                    </div>
-                                ))}
 
+
+                                {dataJson.map((data, index: number) => {
+
+                                    if (index % 2 !== 0) {
+
+                                        return (
+                                            <div className="col-lg-6">
+                                                <div className="ptg-portfolio-item mb-30  p-relative wow tpfadeUp" data-wow-delay=".4s">
+                                                    <div className="ptg-portfolio-item-img text-center" data-tilt data-tilt-perspective="2000">
+                                                        <a href={IMG_URL+'/'+data.path} className="ptg-portfilo">
+                                                            <img src={IMG_URL+'/'+data.path} alt="pt2" />
+                                                        </a>
+                                                    </div>
+                                                    <div className="ptg-portfolio-item-info">
+                                                        <span className=" ptg-portfolio-item-subtitle">{data.titulo}</span>
+                                                        <h3 className="ptg-portfolio-item-title"><a href="#">{data.description}</a></h3>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        );
+                                    }
+
+                                    return (
+                                        <div className="col-lg-6" key={data.id}>
+                                            <div className="ptg-portfolio-item mb-30  p-relative wow tpfadeUp" data-wow-delay=".3s">
+                                                <div className="ptg-portfolio-item-img pta-pt-img-large" data-tilt data-tilt-perspective="2000">
+                                                    <a href={IMG_URL+'/'+data.path} className="ptg-portfilo">
+                                                        <img src={IMG_URL+'/'+data.path} alt="pt1" />
+                                                    </a>
+                                                </div>
+                                                <div className="ptg-portfolio-item-info">
+                                                    <span className="ptg-portfolio-item-subtitle">{data.titulo}</span>
+                                                    <h3 className="ptg-portfolio-item-title"><a href="#">{data.description}</a></h3>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    );
+                                })}
                                 
                                 {/* <div className="col-lg-6">
                                     <div className="ptg-portfolio-item mb-100 p-relative wow tpfadeUp" data-wow-delay=".5s">
