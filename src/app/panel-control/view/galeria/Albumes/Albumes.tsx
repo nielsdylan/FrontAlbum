@@ -7,7 +7,7 @@ import DataTable, {type  DataTableRef } from 'datatables.net-react'
 import 'datatables.net-responsive'
 import 'datatables.net-select'
 import ReactDOMServer from 'react-dom/server'
-import { TbChevronLeft, TbChevronRight, TbChevronsLeft, TbChevronsRight, TbEdit, TbEye, TbPlus, TbTrash } from 'react-icons/tb'
+import { TbChevronLeft, TbChevronRight, TbChevronsLeft, TbChevronsRight, TbEdit, TbEye, TbPlus, TbQrcode, TbTrash } from 'react-icons/tb'
 import { createRoot } from 'react-dom/client'
 import { useEffect, useRef, useState } from 'react'
 import useToggle from '@/hooks/useToggle'
@@ -19,7 +19,7 @@ import Swal from 'sweetalert2'
 import ComponentCard from "@/components/cards/ComponentCard"
 // ------
 //cambiar
-import { listarData, guardarData, inactivarData, verData } from '@/app/panel-control/services/galeria/AlbumServices'
+import { listarData, guardarData, inactivarData, verData, generarQR } from '@/app/panel-control/services/galeria/AlbumServices'
 // import type { Servicio } from "../../interface/Servicio"
 import type { Album } from "@/app/panel-control/interface/galeria/Album"
 import { useNavigate } from "react-router"
@@ -57,6 +57,19 @@ const CardTable = () => {
         const root = createRoot(cell as HTMLElement);
         root.render(
           <div className=" gap-1 ms-2 ">
+
+            <OverlayTrigger
+              placement="top"
+              overlay={
+                <Tooltip id={`tooltip-${rowData.id}`} className="danger-tooltip">
+                  Generar QR.
+                </Tooltip>
+              }
+            >
+              <button className="btn btn-sm btn-outline-default btn-icon rounded" onClick={() => handleViewQR(Number(rowData.id))}>
+                <TbQrcode  className="fs-lg" />
+              </button>
+            </OverlayTrigger>
 
             <OverlayTrigger
               placement="top"
@@ -103,7 +116,10 @@ const CardTable = () => {
   const { isTrue: isOpen, toggle: toggleModal } = useToggle(); // variable para abrir y cerrar el modal
   const navigate = useNavigate();
   const [listaPlantillas, setListaPlantillas] = useState<Plantilla[]>([]);
-
+  // Modal 2: QR (El que se ve en image_e8d4e4.png)
+  const { isTrue: isOpenQR, toggle: toggleModalQR } = useToggle();
+  const [imgQR, setImgQR] = useState("");
+  const [linkQR, setLinkQR] = useState("");
   DataTable.use(DT)
   const tableRef = useRef<DataTableRef | null>(null)
   // ---- evento que carga al inciar la pagian useEffect --
@@ -280,6 +296,13 @@ const CardTable = () => {
     setListaPlantillas(respons);
     
   }
+  const handleViewQR = async (id: number) => {
+    const respons = await generarQR(id);
+    toggleModalQR();
+    console.log(respons);
+    setImgQR(respons.imagen)
+    setLinkQR(respons.link)
+  };
   return (
     <ComponentCard title="Lista de Albumes">
       <Button variant="secondary" className="mb-3 btn-sm" onClick={() => handleNew(0) }>
@@ -487,6 +510,31 @@ const CardTable = () => {
             </Button>
           </ModalFooter>
         </form>
+      </Modal>
+      {/* modal de qr---------------------------------------------------------------------- */}
+      <Modal
+        className="fade"
+        show={isOpenQR}
+        onHide={toggleModalQR}
+        backdrop="static"
+        keyboard={false}
+      >
+        <ModalHeader closeButton>
+          <ModalTitle as="h5">QR</ModalTitle>
+        </ModalHeader>
+            <ModalBody>
+                <div className="row">
+                <div className="col-md-12 text-center">
+                    <img src={`data:image/png;base64,${imgQR}`} alt="Código QR" />
+                </div>
+                </div>
+            </ModalBody>
+            <ModalFooter>
+                <Button variant="default" onClick={toggleModalQR} className="btn-sm">
+                    Cerrar
+                </Button>
+                <a href={linkQR} target="_blank" rel="noopener noreferrer" className="btn-sm btn-success btn">Ver plantilla</a>
+            </ModalFooter>
       </Modal>
     </ComponentCard>
   )

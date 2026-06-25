@@ -62,3 +62,17 @@ export const inactivarData = async (data: { id:number, estado:number }) => {
     throw error;
   }
 };
+export const todasFotos = async (id:number) => {
+  try {
+    const response = await axios.get(API_URL + "/fotos/all-usuario/" + id, {
+      headers: {
+        Authorization: `Bearer ${token}`, // Send the token in the Authorization header
+      },
+    });
+
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching users:", error);
+    throw error;
+  }
+};

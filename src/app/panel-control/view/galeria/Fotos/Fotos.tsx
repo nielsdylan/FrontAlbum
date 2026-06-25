@@ -23,21 +23,33 @@ const Fotos = () => {
 
     useEffect(
         () => {
-            listaFotos();
+            listaFotos(1);
         },
-        [currentPage, perPage],
+        [perPage],
     );
     const listaFotos = async (page = 1, limit = perPage) => {
         try {
             const respons: Paginate = await listarData(page, limit);
             
-            setDataJson(respons.data); // Laravel devuelve los registros en .data
+            // setDataJson(respons.data); // Laravel devuelve los registros en .data
+            // setCurrentPage(respons.current_page);
+            // setLastPage(respons.last_page);
+            // setTotalRecords(respons.total);
+    
+            // setLinks(respons.links);
+            // console.log(respons);
+
+            // 💡 CLAVE: Si es la página 1, reiniciamos el array. Si es una página posterior, acumulamos.
+            if (page === 1) {
+                setDataJson(respons.data);
+            } else {
+                setDataJson((prevData) => [...prevData, ...respons.data]);
+            }
+
             setCurrentPage(respons.current_page);
             setLastPage(respons.last_page);
             setTotalRecords(respons.total);
-    
             setLinks(respons.links);
-            console.log(respons);
             
         } catch (error) {
             console.log(error);
@@ -49,6 +61,17 @@ const Fotos = () => {
         setUrlImagen(url);
         toggleModal();
     }
+
+    const cargarMasFotos = () => {
+        const nextPage = currentPage + 1;
+        // Solo disparamos la petición si no hemos superado el límite de páginas
+        if (nextPage <= lastPage) {
+            listaFotos(nextPage, perPage);
+            console.log(nextPage);
+            console.log(perPage);
+            
+        }
+    };
     return (
         <div>
             <Container fluid>
@@ -56,8 +79,9 @@ const Fotos = () => {
                 {/* <CardImageLink /> */}
                 <Row>
                     <Col xxl={2}>
+                        
                         <Link to="/panel-control/galeria/fotos/nueva-foto">
-                        <button className="btn btn-success">Nueva foto</button>
+                            <button className="btn btn-success mb-2">Nueva foto</button>
                         </Link>
                     </Col>
                 </Row>
@@ -105,6 +129,16 @@ const Fotos = () => {
                     ))}
                     
                 </Row>
+                {currentPage < lastPage && (
+                    <div className="text-center my-4">
+                    <button 
+                        className="btn btn-primary px-4 py-2" 
+                        onClick={cargarMasFotos}
+                    >
+                        Ver más
+                    </button>
+                    </div>
+                )}
             </Container>
 
             <Modal

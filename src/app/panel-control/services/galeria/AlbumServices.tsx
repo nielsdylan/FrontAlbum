@@ -76,3 +76,18 @@ export const allAlbumes = async () => {
     throw error;
   }
 };
+
+export const generarQR = async (id:number) => {
+  try {
+    const response = await axios.get(API_URL + "/panel-control/galeria/albumes/generar-qr/" + id, {
+      headers: {
+        Authorization: `Bearer ${token}`, // Send the token in the Authorization header
+      },
+    });
+
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching users:", error);
+    throw error;
+  }
+};
