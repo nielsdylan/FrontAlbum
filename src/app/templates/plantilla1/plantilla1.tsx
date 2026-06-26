@@ -371,6 +371,8 @@ const plantilla1 = () => {
                     <div className="tp-ptg-slider p-relative">
                         <div className="swiper-container ptg-slider-active">
                             <div className="swiper-wrapper">
+                                
+                                
                                 <div className="swiper-slide ptg-slider-item ptg-slider-height d-flex align-items-center p-relative"
                                     data-background={sliderHero1}>
                                     <div className="container">
@@ -392,20 +394,34 @@ const plantilla1 = () => {
                                             </div>
                                         </div>
                                     </div>
-                                    <div className="ptg-slider-social">
-                                        <b>Connect Here:</b>
-                                        <span> <a href="#"><i className="fab fa-facebook-f"></i></a></span>
-                                        <span> <a href="#"><i className="fab fa-twitter"></i></a></span>
-                                        <span> <a href="#"><i className="fab fa-behance"></i></a></span>
-                                        <span> <a href="#"><i className="fab fa-youtube"></i></a></span>
-                                    </div>
-                                    <div className="ptg-contact-slider-info">
-                                        <span><a  href="mailto:info@gencio.com"></a>info@webmail.com</span>
-                                        <span className="ptg-spt"> - </span>
-                                        <span><a href="te:#"></a>222 090 000 01</span>
-                                    </div>
+                                    
                                 </div>
                                 <div className="swiper-slide ptg-slider-item ptg-slider-height d-flex align-items-center p-relative"
+                                    data-background={sliderHero1}>
+                                    <div className="container">
+                                        <div className="row">
+                                            <div className="col-12">
+                                                <div className="tp-ptg-slider-content text-center p-relative">
+                                                    <h3 className="tp-ptg-slider-title mb-45" data-animation="tpfadeUp"
+                                                        data-delay=".3s">Gencio <br />
+                                                        <span>Photography</span>
+                                                    </h3>
+                                                    <a href="#" className="ptg-slider-btn" data-animation="tpfadeUp" data-delay=".5s">
+                                                        <span className="circle mr-20">
+                                                            <i className="fal fa-long-arrow-right"></i>
+                                                            <i className="fal fa-long-arrow-right"></i>
+                                                        </span>
+                                                        Hire Us Now
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                                
+                                
+                                {/* <div className="swiper-slide ptg-slider-item ptg-slider-height d-flex align-items-center p-relative"
                                     data-background="assets/img/slider/ptg-hero-2.jpg">
                                     <div className="container">
                                         <div className="row">
@@ -472,7 +488,7 @@ const plantilla1 = () => {
                                         <span className="ptg-spt"> - </span>
                                         <span><a href="te:#"></a>222 090 000 01</span>
                                     </div>
-                                </div>
+                                </div> */}
                             </div>
                         </div>
                         <div className="ptg-sldider-dot"></div>
