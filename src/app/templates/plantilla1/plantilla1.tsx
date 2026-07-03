@@ -372,8 +372,53 @@ const plantilla1 = () => {
                         <div className="swiper-container ptg-slider-active">
                             <div className="swiper-wrapper">
                                 
-                                
-                                <div className="swiper-slide ptg-slider-item ptg-slider-height d-flex align-items-center p-relative"
+                                {/* {dataJson.slice(0, 3).map((_, index) => (
+                                    <div key={index} className="swiper-slide ptg-slider-item ptg-slider-height d-flex align-items-center p-relative" data-background={sliderHero1}>
+                                    <div className="container">
+                                        <div className="row">
+                                        <div className="col-12">
+                                            <div className="tp-ptg-slider-content text-center p-relative">
+                                            <h3 className="tp-ptg-slider-title mb-45" data-animation="tpfadeUp" data-delay=".3s">
+                                                Gencio <br />
+                                                <span>Photography</span>
+                                            </h3>
+                                            <a href="#" className="ptg-slider-btn" data-animation="tpfadeUp" data-delay=".5s">
+                                                <span className="circle mr-20">
+                                                <i className="fal fa-long-arrow-right"></i>
+                                                <i className="fal fa-long-arrow-right"></i>
+                                                </span>
+                                                Hire Us Now
+                                            </a>
+                                            </div>
+                                        </div>
+                                        </div>
+                                    </div>
+                                    </div>
+                                ))} */}
+                                {dataJson.slice(0, 3).map((item, index) => (
+                                    <div key={item.id ? item.id : index} className="swiper-slide ptg-slider-item ptg-slider-height d-flex align-items-center p-relative" data-background={sliderHero1}>
+                                        <div className="container">
+                                        <div className="row">
+                                            <div className="col-12">
+                                            <div className="tp-ptg-slider-content text-center p-relative">
+                                                <h3 className="tp-ptg-slider-title mb-45" data-animation="tpfadeUp" data-delay=".3s">
+                                                Gencio <br /> 
+                                                <span>Photography</span>
+                                                </h3>
+                                                <a href="#" className="ptg-slider-btn" data-animation="tpfadeUp" data-delay=".5s">
+                                                <span className="circle mr-20">
+                                                    <i className="fal fa-long-arrow-right"></i>
+                                                    <i className="fal fa-long-arrow-right"></i>
+                                                </span>
+                                                Hire Us Now
+                                                </a>
+                                            </div>
+                                            </div>
+                                        </div>
+                                        </div>
+                                    </div>
+                                    ))}
+                                {/* <div className="swiper-slide ptg-slider-item ptg-slider-height d-flex align-items-center p-relative"
                                     data-background={sliderHero1}>
                                     <div className="container">
                                         <div className="row">
@@ -418,7 +463,7 @@ const plantilla1 = () => {
                                         </div>
                                     </div>
                                     
-                                </div>
+                                </div> */}
                                 
                                 
                                 {/* <div className="swiper-slide ptg-slider-item ptg-slider-height d-flex align-items-center p-relative"
@@ -639,7 +684,7 @@ const plantilla1 = () => {
                                     if (index % 2 !== 0) {
 
                                         return (
-                                            <div className="col-lg-6">
+                                            <div key={data.id} className="col-lg-6">
                                                 <div className="ptg-portfolio-item mb-30  p-relative wow tpfadeUp" data-wow-delay=".4s">
                                                     <div className="ptg-portfolio-item-img text-center" data-tilt data-tilt-perspective="2000">
                                                         <a href={IMG_URL+'/'+data.path} className="ptg-portfilo">
@@ -653,23 +698,25 @@ const plantilla1 = () => {
                                                 </div>
                                             </div>
                                         );
-                                    }
-
-                                    return (
-                                        <div className="col-lg-6" key={data.id}>
-                                            <div className="ptg-portfolio-item mb-30  p-relative wow tpfadeUp" data-wow-delay=".3s">
-                                                <div className="ptg-portfolio-item-img pta-pt-img-large" data-tilt data-tilt-perspective="2000">
-                                                    <a href={IMG_URL+'/'+data.path} className="ptg-portfilo">
-                                                        <img src={IMG_URL+'/'+data.path} alt="pt1" />
-                                                    </a>
-                                                </div>
-                                                <div className="ptg-portfolio-item-info">
-                                                    <span className="ptg-portfolio-item-subtitle">{data.titulo}</span>
-                                                    <h3 className="ptg-portfolio-item-title"><a href="#">{data.description}</a></h3>
+                                    }else{
+                                        return (
+                                            <div key={data.id} className="col-lg-6" >
+                                                <div className="ptg-portfolio-item mb-30  p-relative wow tpfadeUp" data-wow-delay=".3s">
+                                                    <div className="ptg-portfolio-item-img pta-pt-img-large" data-tilt data-tilt-perspective="2000">
+                                                        <a href={IMG_URL+'/'+data.path} className="ptg-portfilo">
+                                                            <img src={IMG_URL+'/'+data.path} alt="pt1" />
+                                                        </a>
+                                                    </div>
+                                                    <div className="ptg-portfolio-item-info">
+                                                        <span className="ptg-portfolio-item-subtitle">{data.titulo}</span>
+                                                        <h3 className="ptg-portfolio-item-title"><a href="#">{data.description}</a></h3>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    );
+                                        );
+                                    }
+
+
                                 })}
                                 
                                 {/* <div className="col-lg-6">
