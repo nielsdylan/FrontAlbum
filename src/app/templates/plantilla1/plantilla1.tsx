@@ -128,14 +128,31 @@ const plantilla1 = () => {
             // Usamos un pequeño setTimeout (ej. 150ms) para asegurarnos de que 
             // React haya terminado de dibujar los elementos en el DOM real.
             const timer = setTimeout(() => {
-            if (window.$ && typeof window.$.fn.tilt !== 'undefined') {
-                // Ejecutamos el plugin sobre todos los elementos con data-tilt
-                window.$('[data-tilt]').tilt({
-                perspective: 2000
-                });
-                console.log("Tilt reactivado exitosamente en las fotos dinámicas");
-            }
-            }, 150);
+                if (window.$ && typeof window.$.fn.tilt !== 'undefined') {
+                    // Ejecutamos el plugin sobre todos los elementos con data-tilt
+                    window.$('[data-tilt]').tilt({
+                        perspective: 2000
+                    });
+                }
+                // === AQUÍ RECONSTRUIMOS EL LOOP DE SWIPER ===
+                // Buscamos el contenedor de tu slider en el HTML
+                const swiperEl = document.querySelector('.ptg-slider-active') as any;
+
+                if (swiperEl && swiperEl.swiper) {
+                    const swiperInstance = swiperEl.swiper;
+                    
+                    swiperInstance.loopDestroy(); // Elimina clones antiguos que se rompieron
+                    swiperInstance.loopCreate();  // Crea clones nuevos con tus fotos reales de la base de datos
+                    swiperInstance.update();      // Actualiza las posiciones de navegación y números
+                    
+                    console.log("Bucle de Swiper reconstruido correctamente con las nuevas imágenes");
+                }
+                // === AQUÍ ESTÁ EL TRUCO ===
+                // Esto simula que moviste el zoom o cambiaste el tamaño de la pantalla.
+                // Obliga a Swiper a recalcularse y a mostrar los números y flechas de inmediato.
+                window.dispatchEvent(new Event('resize'));
+                console.log("Swiper recalculado tras cargar las fotos");
+            }, 300);
 
             return () => clearTimeout(timer);
         }
@@ -372,46 +389,25 @@ const plantilla1 = () => {
                         <div className="swiper-container ptg-slider-active">
                             <div className="swiper-wrapper">
                                 
-                                {/* {dataJson.slice(0, 3).map((_, index) => (
-                                    <div key={index} className="swiper-slide ptg-slider-item ptg-slider-height d-flex align-items-center p-relative" data-background={sliderHero1}>
-                                    <div className="container">
-                                        <div className="row">
-                                        <div className="col-12">
-                                            <div className="tp-ptg-slider-content text-center p-relative">
-                                            <h3 className="tp-ptg-slider-title mb-45" data-animation="tpfadeUp" data-delay=".3s">
-                                                Gencio <br />
-                                                <span>Photography</span>
-                                            </h3>
-                                            <a href="#" className="ptg-slider-btn" data-animation="tpfadeUp" data-delay=".5s">
-                                                <span className="circle mr-20">
-                                                <i className="fal fa-long-arrow-right"></i>
-                                                <i className="fal fa-long-arrow-right"></i>
-                                                </span>
-                                                Hire Us Now
-                                            </a>
-                                            </div>
-                                        </div>
-                                        </div>
-                                    </div>
-                                    </div>
-                                ))} */}
                                 {dataJson.slice(0, 3).map((item, index) => (
-                                    <div key={item.id ? item.id : index} className="swiper-slide ptg-slider-item ptg-slider-height d-flex align-items-center p-relative" data-background={sliderHero1}>
+                                    <div key={item.id ? item.id : index} className="swiper-slide ptg-slider-item ptg-slider-height d-flex align-items-center p-relative" 
+                                    // data-background={IMG_URL+'/'+item.path}
+                                    style={{ backgroundImage: `url(${IMG_URL}/${item.path})` }}>
                                         <div className="container">
                                         <div className="row">
                                             <div className="col-12">
                                             <div className="tp-ptg-slider-content text-center p-relative">
                                                 <h3 className="tp-ptg-slider-title mb-45" data-animation="tpfadeUp" data-delay=".3s">
                                                 Gencio <br /> 
-                                                <span>Photography</span>
+                                                <span>Photography {index}</span>
                                                 </h3>
-                                                <a href="#" className="ptg-slider-btn" data-animation="tpfadeUp" data-delay=".5s">
-                                                <span className="circle mr-20">
-                                                    <i className="fal fa-long-arrow-right"></i>
-                                                    <i className="fal fa-long-arrow-right"></i>
-                                                </span>
-                                                Hire Us Now
-                                                </a>
+                                                {/* <a href="#" className="ptg-slider-btn" data-animation="tpfadeUp" data-delay=".5s">
+                                                    <span className="circle mr-20">
+                                                        <i className="fal fa-long-arrow-right"></i>
+                                                        <i className="fal fa-long-arrow-right"></i>
+                                                    </span>
+                                                    Hire Us Now
+                                                </a> */}
                                             </div>
                                             </div>
                                         </div>
