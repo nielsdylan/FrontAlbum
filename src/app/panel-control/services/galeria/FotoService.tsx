@@ -62,9 +62,9 @@ export const inactivarData = async (data: { id:number, estado:number }) => {
     throw error;
   }
 };
-export const todasFotos = async (id:number) => {
+export const todasFotos = async (id:number, album_id:number) => {
   try {
-    const response = await axios.get(API_URL + "/fotos/all-usuario/" + id, {
+    const response = await axios.get(API_URL + "/fotos/all-usuario/" + id + "/"+album_id , {
       headers: {
         Authorization: `Bearer ${token}`, // Send the token in the Authorization header
       },

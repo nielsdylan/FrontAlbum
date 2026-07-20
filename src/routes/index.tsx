@@ -86,9 +86,9 @@ const allRoutes: RouteObject[] = [
     },
     // ---------------------------------------------------------------------------------------------------------------------
     // RUTA PÚBLICA (Landing Page)
-    { path: 'template/plantilla1/:usuario_id', element: <Plantilla1/> },
-    { path: 'template/plantilla2/:usuario_id', element: <Plantilla2/> },
-    { path: 'template/plantilla3/:usuario_id', element: <Plantilla3/> },
+    { path: 'template/plantilla1/:usuario_id/:album_id', element: <Plantilla1/> },
+    { path: 'template/plantilla2/:usuario_id/:album_id', element: <Plantilla2/> },
+    { path: 'template/plantilla3/:usuario_id/:album_id', element: <Plantilla3/> },
     //---------------------------------------------------------------------------------------------------------------------
     // GRUPO PANEL DE CONTROL (Login + Dashboard)
     {

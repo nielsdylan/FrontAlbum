@@ -19,27 +19,21 @@ import { useEffect, useState } from 'react';
     // Importaciones de imágenes para el Layout
 // import navPatternBottom from "@/app/templates/plantilla1/assets/img/hero/nav-parrten-botoom.png";
 import navPatternBottom from "@/app/templates/plantilla1/assets/img/hero/nav-parrten-botoom.png";
-import sliderHero1 from "@/app/templates/plantilla1/assets/img/slider/ptg-hero-1.jpg";
 import darkLogo from "@/app/templates/plantilla1/assets/img/logo/dark-logo.png";
 
-// Importaciones de las imágenes de la sección Portfolio
-import portfolio1 from "@/app/templates/plantilla1/assets/img/portfolio/ptg-portfilo-1.jpg";
-import portfolio2 from "@/app/templates/plantilla1/assets/img/portfolio/ptg-portfilo-2.jpg";
-import portfolio3 from "@/app/templates/plantilla1/assets/img/portfolio/ptg-portfilo-3.jpg";
-import portfolio4 from "@/app/templates/plantilla1/assets/img/portfolio/ptg-portfilo-4.jpg";
-import portfolio5 from "@/app/templates/plantilla1/assets/img/portfolio/ptg-portfilo-5.jpg";
-import portfolio6 from "@/app/templates/plantilla1/assets/img/portfolio/ptg-portfilo-6.jpg";
 import { useParams } from 'react-router';
 import { todasFotos } from '@/app/panel-control/services/galeria/FotoService';
 import type { Image } from '@/app/panel-control/interface/galeria/Image';
+import type { Album } from '@/app/panel-control/interface/galeria/Album';
 
 // Si en el resto de tu HTML tienes más imágenes, puedes importarlas siguiendo este mismo patrón:
 // import nombreVariable from "../assets/img/ruta/imagen.png";
 const IMG_URL = import.meta.env.VITE_APP_IMG_URL;
 
 const plantilla1 = () => {
-    const { usuario_id } = useParams<Record<string, string | undefined>>();
+    const { usuario_id, album_id } = useParams<Record<string, string | undefined>>();
     const [dataJson, setDataJson] = useState<Image[]>([]);
+    const [album, setAlbum] = useState<Album | null>(null);
     useEffect(() => {
         
         // 2. IMPORTACIÓN DE JAVASCRIPT
@@ -47,23 +41,23 @@ const plantilla1 = () => {
         // para subirlos dinámicamente desde este archivo (que está en layouts/) es saliendo una carpeta hacia atrás.
         // la ruta en la que esta los scripts son en "public/template/plantilla1/assets/js/"
         const scripts = [
-            "../plantilla1/assets/js/jquery.js", // Siempre primero
-            "../plantilla1/assets/js/waypoints.js",
-            "../plantilla1/assets/js/modernizr.js",
-            "../plantilla1/assets/js/bootstrap.bundle.min.js",
-            "../plantilla1/assets/js/meanmenu.js",
-            "../plantilla1/assets/js/swiper-bundle.js",
-            "../plantilla1/assets/js/slick.js",
-            "../plantilla1/assets/js/magnific-popup.js",
-            "../plantilla1/assets/js/counterup.js",
-            "../plantilla1/assets/js/wow.js",
-            "../plantilla1/assets/js/nice-select.js",
-            "../plantilla1/assets/js/isotope-pkgd.js",
-            "../plantilla1/assets/js/imagesloaded-pkgd.js",
-            "../plantilla1/assets/js/ajax-form.js",
-            "../plantilla1/assets/js/headline.js",
-            "../plantilla1/assets/js/tilt.jquery.min.js",
-            "../plantilla1/assets/js/main.js" // Al final para activar la plantilla
+            "/template/plantilla1/assets/js/jquery.js", // Siempre primero
+            "/template/plantilla1/assets/js/waypoints.js",
+            "/template/plantilla1/assets/js/modernizr.js",
+            "/template/plantilla1/assets/js/bootstrap.bundle.min.js",
+            "/template/plantilla1/assets/js/meanmenu.js",
+            "/template/plantilla1/assets/js/swiper-bundle.js",
+            "/template/plantilla1/assets/js/slick.js",
+            "/template/plantilla1/assets/js/magnific-popup.js",
+            "/template/plantilla1/assets/js/counterup.js",
+            "/template/plantilla1/assets/js/wow.js",
+            "/template/plantilla1/assets/js/nice-select.js",
+            "/template/plantilla1/assets/js/isotope-pkgd.js",
+            "/template/plantilla1/assets/js/imagesloaded-pkgd.js",
+            "/template/plantilla1/assets/js/ajax-form.js",
+            "/template/plantilla1/assets/js/headline.js",
+            "/template/plantilla1/assets/js/tilt.jquery.min.js",
+            "/template/plantilla1/assets/js/main.js" // Al final para activar la plantilla
         ];
 
         const loadedScriptElements: HTMLScriptElement[] = [];
@@ -103,10 +97,10 @@ const plantilla1 = () => {
     }, []);
 
     useEffect(() => {
-        if (usuario_id) {
-            listaFotos(usuario_id);
+        if (usuario_id && album_id) {
+            listaFotos(Number(usuario_id), Number(album_id));
         }
-    }, [usuario_id]); // Solo se ejecuta si cambia el ID del usuario
+    }, [usuario_id, album_id]); // Solo se ejecuta si cambia el ID del usuario
 
     useEffect(() => {
         // Comprobamos si el array ya tiene fotos y si jQuery está disponible en el objeto global window
@@ -128,9 +122,17 @@ const plantilla1 = () => {
             // Usamos un pequeño setTimeout (ej. 150ms) para asegurarnos de que 
             // React haya terminado de dibujar los elementos en el DOM real.
             const timer = setTimeout(() => {
-                if (window.$ && typeof window.$.fn.tilt !== 'undefined') {
-                    // Ejecutamos el plugin sobre todos los elementos con data-tilt
-                    window.$('[data-tilt]').tilt({
+                // if (window.$ && typeof window.$.fn.tilt !== 'undefined') {
+                //     // Ejecutamos el plugin sobre todos los elementos con data-tilt
+                //     window.$('[data-tilt]').tilt({
+                //         perspective: 2000
+                //     });
+                // }
+                
+                const $ = (window as any).$;
+    
+                if ($ && $.fn && typeof $.fn.tilt !== 'undefined') {
+                    $('[data-tilt]').tilt({
                         perspective: 2000
                     });
                 }
@@ -158,10 +160,12 @@ const plantilla1 = () => {
         }
     }, [dataJson]);
 
-    const listaFotos = async (id: number) => {
-        const respons: Image[] = await todasFotos(id);
-        setDataJson(respons)
-        console.log(respons);
+    const listaFotos = async (id: number, album_id:number) => {
+        // const respons: Image[] = await todasFotos(id,album_id);
+        const respons = await todasFotos(id,album_id);
+        setDataJson(respons.imagenes)
+        setAlbum(respons.album)
+        console.log(album);
         
     }
 
@@ -398,8 +402,8 @@ const plantilla1 = () => {
                                             <div className="col-12">
                                             <div className="tp-ptg-slider-content text-center p-relative">
                                                 <h3 className="tp-ptg-slider-title mb-45" data-animation="tpfadeUp" data-delay=".3s">
-                                                Gencio <br /> 
-                                                <span>Photography {index}</span>
+                                                {album?.titulo} <br /> 
+                                                {/* <span>Photography {index}</span> */}
                                                 </h3>
                                                 {/* <a href="#" className="ptg-slider-btn" data-animation="tpfadeUp" data-delay=".5s">
                                                     <span className="circle mr-20">
@@ -661,11 +665,11 @@ const plantilla1 = () => {
                                 <div className="col-12">
                                     <div className="section-title-wraper text-center">
                                         <div className="tp-section">
-                                            <span className="tp-section__subtitle mb-15 shadow-none text-rgb p-0 wow tpfadeUp">Photo Showcase</span>
-                                            <h2
+                                            <span className="tp-section__subtitle mb-15 shadow-none text-rgb p-0 wow tpfadeUp">Fotos</span>
+                                            {/* <h2
                                                 className="tp-section__title text-non-rgb tp-rgb-border text-white text-uppercase mb-65 wow tpfadeUp" data-wow-delay=".4s">
                                                 our <span> case study</span>
-                                            </h2>
+                                            </h2> */}
                                         </div>
                                     </div>
                                 </div>
