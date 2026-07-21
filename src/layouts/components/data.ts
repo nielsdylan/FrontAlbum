@@ -125,7 +125,11 @@ export const menuItems: MenuItemType[] = [
   },
   { key: 'plantillas', label: 'Plantillas', icon: LuCircleGauge, url: '/panel-control/plantillas' },
   // ------------------------------------------
-  
+  /*
+  * Menu de configuraciones
+  *
+  */
+  { key: 'admin', label: 'Administrador', isTitle: true },
 ]
 
 export const horizontalMenuItems: MenuItemType[] = [
