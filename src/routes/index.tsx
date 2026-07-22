@@ -33,7 +33,6 @@ const PublicLayout   = lazy(() => import('@/app/web/layouts/PublicLayout'))
 
 
 const Albumes   = lazy(() => import('@/app/panel-control/view/galeria/Albumes/Albumes'))
-const AlbumDetalle   = lazy(() => import('@/app/panel-control/view/galeria/Albumes/AlbumDetalle'))
 const Fotos   = lazy(() => import('@/app/panel-control/view/galeria/Fotos/Fotos'))
 const NuevaFoto   = lazy(() => import('@/app/panel-control/view/galeria/Fotos/NuevaFoto'))
 const ListPlantilla   = lazy(() => import('@/app/panel-control/view/plantillas/ListPlantilla'))
