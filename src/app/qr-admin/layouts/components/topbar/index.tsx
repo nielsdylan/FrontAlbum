@@ -1,11 +1,11 @@
 
 import { useLayoutContext } from '@/context/useLayoutContext'
-import CustomizerToggler from '@/layouts/components/topbar/components/CustomizerToggler'
-import LanguageDropdown from '@/layouts/components/topbar/components/LanguageDropdown'
+import CustomizerToggler from '@/app/qr-admin/layouts/components/topbar/components/CustomizerToggler'
+import LanguageDropdown from '@/app/qr-admin/layouts/components/topbar/components/LanguageDropdown'
 // import MegaMenu from '@/layouts/components/topbar/components/MegaMenu'
-import MessageDropdown from '@/layouts/components/topbar/components/MessageDropdown'
-import ThemeToggler from '@/layouts/components/topbar/components/ThemeToggler'
-import UserProfile from '@/layouts/components/topbar/components/UserProfile'
+import MessageDropdown from '@/app/qr-admin/layouts/components/topbar/components/MessageDropdown'
+import ThemeToggler from '@/app/qr-admin/layouts/components/topbar/components/ThemeToggler'
+import UserProfile from '@/app/qr-admin/layouts/components/topbar/components/UserProfile'
 
 import {Link} from "react-router";
 import { Container, FormControl } from 'react-bootstrap'
@@ -15,9 +15,9 @@ import { TbMenu4 } from 'react-icons/tb'
 import logoDark from '@/assets/images/logo-black.png'
 import logoSm from '@/assets/images/logo-sm.png'
 import logo from '@/assets/images/logo.png'
-import ApplicationMenu from '@/layouts/components/topbar/components/ApplicationMenu'
-import FullscreenToggle from '@/layouts/components/topbar/components/FullscreenToggle'
-import MonochromeThemeModeToggler from '@/layouts/components/topbar/components/MonochromeThemeModeToggler'
+import ApplicationMenu from '@/app/qr-admin/layouts/components/topbar/components/ApplicationMenu'
+import FullscreenToggle from '@/app/qr-admin/layouts/components/topbar/components/FullscreenToggle'
+import MonochromeThemeModeToggler from '@/app/qr-admin/layouts/components/topbar/components/MonochromeThemeModeToggler'
 
 const Topbar = () => {
   const { sidenav, changeSideNavSize, showBackdrop } = useLayoutContext()
