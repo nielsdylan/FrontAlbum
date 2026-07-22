@@ -42,7 +42,16 @@ const ListPlantilla   = lazy(() => import('@/app/panel-control/view/plantillas/L
 const Plantilla1   = lazy(() => import('@/app/templates/plantilla1/plantilla1'))
 const Plantilla2   = lazy(() => import('@/app/templates/plantilla2/plantilla2'))
 const Plantilla3   = lazy(() => import('@/app/templates/plantilla3/plantilla3'))
-// CONFIGURACION DE RUTAS-------------
+
+// RUTAS DE LOS QR ADMIN --------------------------
+const QRAdmin   = lazy(() => import('@/app/qr-admin/auth/qrAuth'))
+import QRPublicRoute from '@/app/qr-admin/service/auth/QRPublicRoute'
+import QRPrivateRoute from '@/app/qr-admin/service/auth/QRPrivateRoute'
+const QRAdminLayout   = lazy(() => import('@/app/qr-admin/layouts/QRAdminLayout'))
+// -------------
+/*
+*CONFIGURACION DE RUTAS DE PANEL DE CONTROL
+*/
 const dashboardRoutes: RouteObject[] = [
     { path: 'dashboard', element: <Dashboard/> },
     {
@@ -57,7 +66,17 @@ const dashboardRoutes: RouteObject[] = [
     },
     { path: 'plantillas', element: <ListPlantilla/> },
 ]
-
+// -------------------------------
+/*
+*CONFIGURACION DE RUTAS DE QR ADMIN
+*/
+const QRAdminRoutes: RouteObject[] = [
+    { path: 'dashboard', element: <Dashboard/> },
+]
+// ----------------------------------------------------
+/*
+*CONFIGURACION DE RUTAS DE ERRORES
+*/
 const errorRoutes: RouteObject[] = [
     {
         path: '/error',
@@ -72,6 +91,10 @@ const errorRoutes: RouteObject[] = [
     },
     
 ]
+// ----------------------------------------------------
+/*
+*CONFIGURACION DE RUTAS DONDE TODO SE ALMACENA
+*/
 const allRoutes: RouteObject[] = [
     // RUTA PÚBLICA (Landing Page)
     {
@@ -119,10 +142,40 @@ const allRoutes: RouteObject[] = [
             },
         ],
     },
+    {
+        path: 'qr-admin',
+        element: <QRAdminLayout />,
+        children: [
+            // Login: entrará por /private/login
+            {
+                index: true,
+                element: <Navigate to="login" replace />
+            },
+            {
+                path: 'login',
+                element: <QRPublicRoute><QRAdmin /></QRPublicRoute>
+            },
+            // Dashboard: entrará por /private/...
+            {
+                element: <QRPrivateRoute />, 
+                children: [
+                    {
+                        element: <MainLayout />,
+                        children: [
+                            { index: true, element: <Navigate to="qr-admin/dashboard" replace /> },
+                            ...QRAdminRoutes,
+                        ],
+                    },
+                ],
+            },
+        ],
+    },
+    
 
     // RUTAS DE ERROR
     { path: '*', element: <Error404 /> },
 ];
+
 
 const otherRoutes: RouteObject[] = [...errorRoutes]
 
