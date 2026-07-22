@@ -1,7 +1,7 @@
-import Customizer from '@/layouts/components/customizer'
-import Footer from '@/layouts/components/footer'
-import Sidenav from '@/layouts/components/sidenav'
-import Topbar from '@/layouts/components/topbar'
+import Customizer from '@/app/qr-admin/layouts/components/customizer'
+import Footer from '@/app/qr-admin/layouts/components/footer'
+import Sidenav from '@/app/qr-admin/layouts/components/sidenav'
+import Topbar from '@/app/qr-admin/layouts/components/topbar'
 import { Fragment } from 'react'
 
 import type { ChildrenType } from '@/types'

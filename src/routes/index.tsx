@@ -47,6 +47,7 @@ const QRAdmin   = lazy(() => import('@/app/qr-admin/auth/qrAuth'))
 import QRPublicRoute from '@/app/qr-admin/service/auth/QRPublicRoute'
 import QRPrivateRoute from '@/app/qr-admin/service/auth/QRPrivateRoute'
 const QRAdminLayout   = lazy(() => import('@/app/qr-admin/layouts/QRAdminLayout'))
+import QRMainLayout from '@/app/qr-admin/layouts/QRMainLayout.tsx'
 // -------------
 /*
 *CONFIGURACION DE RUTAS DE PANEL DE CONTROL
@@ -159,7 +160,7 @@ const allRoutes: RouteObject[] = [
                 element: <QRPrivateRoute />, 
                 children: [
                     {
-                        element: <MainLayout />,
+                        element: <QRMainLayout />,
                         children: [
                             { index: true, element: <Navigate to="qr-admin/dashboard" replace /> },
                             ...QRAdminRoutes,
