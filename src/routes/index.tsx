@@ -1,10 +1,6 @@
 // IMPORTACIONES  -------------
 import {lazy} from 'react'
 import {Navigate, type RouteObject} from 'react-router'
-import MainLayout from '@/layouts/MainLayout.tsx'
-import PrivateRoute from '@/app/panel-control/services/auth/PrivateRoute'
-import PublicRoute from '@/app/panel-control/services/auth/PublicRoute'
-
 
 // -------------
 // RUTAS DE LOS COMPONENTES --------------------------
@@ -28,9 +24,13 @@ const Nosotros      = lazy(() => import('@/app/web/view/Nosotros'))
 const Contacto      = lazy(() => import('@/app/web/view/Contacto'))
 // -------------
 // COMPONENTES DEL PANEL DE CONTROL ALBUM--------------------------
-const AdminLayout   = lazy(() => import('@/app/panel-control/layouts/AdminLayout'))
+const AdminLayout   = lazy(() => import('@/app/panel-control/layouts/AdminLayout'))//1
 const PublicLayout   = lazy(() => import('@/app/web/layouts/PublicLayout'))
-
+import PublicRoute from '@/app/panel-control/services/auth/PublicRoute'
+import PrivateRoute from '@/app/panel-control/services/auth/PrivateRoute'
+// import MainLayout from '@/layouts/MainLayout.tsx'
+import MainLayout from '@/app/panel-control/layouts/MainLayout'
+// -------------------------------------------//
 
 const Albumes   = lazy(() => import('@/app/panel-control/view/galeria/Albumes/Albumes'))
 const Fotos   = lazy(() => import('@/app/panel-control/view/galeria/Fotos/Fotos'))
