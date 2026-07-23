@@ -48,6 +48,7 @@ import QRPublicRoute from '@/app/qr-admin/service/auth/QRPublicRoute'
 import QRPrivateRoute from '@/app/qr-admin/service/auth/QRPrivateRoute'
 const QRAdminLayout   = lazy(() => import('@/app/qr-admin/layouts/QRAdminLayout'))
 import QRMainLayout from '@/app/qr-admin/layouts/QRMainLayout.tsx'
+const ListaClientes   = lazy(() => import('@/app/qr-admin/view/clientes/ListaClientes'))
 // -------------
 /*
 *CONFIGURACION DE RUTAS DE PANEL DE CONTROL
@@ -72,6 +73,7 @@ const dashboardRoutes: RouteObject[] = [
 */
 const QRAdminRoutes: RouteObject[] = [
     { path: 'dashboard', element: <Dashboard/> },
+    { path: 'clientes', element: <ListaClientes/> },
 ]
 // ----------------------------------------------------
 /*

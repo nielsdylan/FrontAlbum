@@ -108,7 +108,8 @@ export const userDropdownItems: UserDropdownItemType[] = [
 
 export const menuItems: MenuItemType[] = [
   { key: 'navigation', label: 'Navigation', isTitle: true },
-  { key: 'dashboards', label: 'Dashboards', icon: LuCircleGauge, url: '/panel-control/dashboard' },
+  { key: 'dashboards', label: 'Dashboards', icon: LuCircleGauge, url: '/qr-admin/dashboard' },
+  { key: 'clientes', label: 'Clientes', icon: LuCircleGauge, url: '/qr-admin/clientes' },
   /*
   * Menu de modullo del album de fotos
   *

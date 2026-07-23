@@ -75,16 +75,16 @@ export const userDropdownItems: UserDropdownItemType[] = [
     icon: TbBellRinging,
     url: '#',
   },
-  // {
-  //   label: 'Balance: $985.25',
-  //   icon: TbCreditCard,
-  //   url: '#',
-  // },
-  // {
-  //   label: 'Account Settings',
-  //   icon: TbSettings2,
-  //   url: '#',
-  // },
+  {
+    label: 'Balance: $985.25',
+    icon: TbCreditCard,
+    url: '#',
+  },
+  {
+    label: 'Account Settings',
+    icon: TbSettings2,
+    url: '#',
+  },
   {
     label: 'Support Center',
     icon: TbHeadset,
@@ -93,11 +93,11 @@ export const userDropdownItems: UserDropdownItemType[] = [
   {
     isDivider: true,
   },
-  // {
-  //   label: 'Lock Screen',
-  //   icon: TbLock,
-  //   url: '/auth-1/lock-screen',
-  // },
+  {
+    label: 'Lock Screen',
+    icon: TbLock,
+    url: '/auth-1/lock-screen',
+  },
   {
     label: 'Log Out',
     icon: TbLogout2,
@@ -113,16 +113,23 @@ export const menuItems: MenuItemType[] = [
   * Menu de modullo del album de fotos
   *
   */
-  // { key: 'admin', label: 'Modulos', isTitle: true },
-  // {
-  //   key: 'galeria',
-  //   label: 'Galeria',
-  //   icon: LuPanelTop,
-  //   children: [
-  //     { key: 'dark-topbar', label: 'Fotos', url: '/panel-control/galeria/fotos' },
-  //     { key: 'dark-topbar', label: 'Albumes', url: '/panel-control/galeria/albumes' },
-  //   ],
-  // },
+  { key: 'admin', label: 'Modulos', isTitle: true },
+  {
+    key: 'galeria',
+    label: 'Galeria',
+    icon: LuPanelTop,
+    children: [
+      { key: 'dark-topbar', label: 'Fotos', url: '/panel-control/galeria/fotos' },
+      { key: 'dark-topbar', label: 'Albumes', url: '/panel-control/galeria/albumes' },
+    ],
+  },
+  { key: 'plantillas', label: 'Plantillas', icon: LuCircleGauge, url: '/panel-control/plantillas' },
+  // ------------------------------------------
+  /*
+  * Menu de configuraciones
+  *
+  */
+  { key: 'admin', label: 'Administrador', isTitle: true },
 ]
 
 export const horizontalMenuItems: MenuItemType[] = [
