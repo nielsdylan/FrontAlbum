@@ -30,7 +30,7 @@ const Index = () => {
 
     try {
       // Reemplaza la URL con la de tu API
-      const response = await axios.post(API_URL + "/login", formValues);
+      const response = await axios.post(API_URL + "/qrcliente/login", formValues);
       localStorage.setItem("userToken", JSON.stringify(response.data));
       localStorage.setItem("token", response.data.access_token);
     } catch (err) {

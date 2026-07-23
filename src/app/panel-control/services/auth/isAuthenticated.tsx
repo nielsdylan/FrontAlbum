@@ -21,7 +21,7 @@ export const isAuthenticated = async () : Promise<boolean>  => {
     // Make an API call to a protected route (e.g., a route that validates the token)
     // console.log(token);
     
-    const response = await axios.post(`${API_URL}/auth/session-token`, 
+    const response = await axios.post(`${API_URL}/auth/qrclientes/session-token`, 
         {},
         { 
             headers: {
@@ -29,6 +29,8 @@ export const isAuthenticated = async () : Promise<boolean>  => {
         }
     });
     // If the request is successful (status 200), the token is valid
+    console.log(response);
+    
     if (response.data.session === true) {
         
         return true;

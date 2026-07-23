@@ -21,7 +21,7 @@ export const QRisAuthenticated = async () : Promise<boolean>  => {
     // Make an API call to a protected route (e.g., a route that validates the token)
     // console.log(token);
     
-    const response = await axios.post(`${API_URL}/auth/session-token`, 
+    const response = await axios.post(`${API_URL}/auth/qradmin/session-token`, 
         {},
         { 
             headers: {
