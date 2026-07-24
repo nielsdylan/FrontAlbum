@@ -1,8 +1,8 @@
 import axios from "axios";
 // Access the API URL from your Vite environment variables
 const API_URL = import.meta.env.VITE_APP_API_URL;
-const TOKEN_KEY = 'token';
-const USER_TOKEN_KEY = 'userToken';
+const TOKEN_KEY = 'token_admin';
+const USER_TOKEN_KEY = 'userToken_admin';
 export const QRisAuthenticated = async () : Promise<boolean>  => {
 
     try {

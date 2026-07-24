@@ -6,8 +6,27 @@ import { Dropdown, DropdownDivider, DropdownItem, DropdownMenu, DropdownToggle }
 import { TbChevronDown } from 'react-icons/tb'
 
 import user3 from '@/assets/images/users/user-3.jpg'
+import { qrLogOut } from '@/app/qr-admin/service/auth/AuthServices';
 
 const UserProfile = () => {
+  const handleLogout = async (e: React.MouseEvent) => {
+    e.preventDefault(); 
+    try {
+        // Intentamos cerrar la sesión en el backend
+        const respons = await qrLogOut();
+        console.log(respons);
+    } catch (error) {
+        // Si da error 401 (ya expiró o es inválido), lo ignoramos
+        console.error("El token ya era inválido en el backend", error);
+    } finally {
+        // El bloque finally se ejecuta SIEMPRE, haya dado error o no.
+        // Forzamos la limpieza del navegador para que el usuario pueda salir.
+        localStorage.removeItem('token_admin');
+        localStorage.removeItem('userToken_admin'); // Asegúrate de borrar los correctos
+        window.location.reload(); 
+    }
+    
+  };
   return (
     <div className="topbar-item nav-user">
       <Dropdown align="end">
@@ -28,7 +47,17 @@ const UserProfile = () => {
               ) : item.isDivider ? (
                 <DropdownDivider />
               ) : (
-                <DropdownItem as={Link} to={item.url ?? ''} className={item.class}>
+                <DropdownItem 
+                  as={Link} 
+                  to={item.url ?? ''} 
+                  className={item.class}
+                  onClick={(e) => {
+                      // 2. Evaluamos si el ítem actual es el de Log Out
+                      if (item.action === 'logout') {
+                          handleLogout(e);
+                      }
+                  }}
+                >
                   {item.icon && <item.icon className="me-2 fs-17 align-middle" />}
                   <span className="align-middle">{item.label}</span>
                 </DropdownItem>

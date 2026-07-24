@@ -58,6 +58,7 @@ type UserDropdownItemType = {
   isDivider?: boolean
   isHeader?: boolean
   class?: string
+  action?: string
 }
 
 export const userDropdownItems: UserDropdownItemType[] = [
@@ -103,6 +104,7 @@ export const userDropdownItems: UserDropdownItemType[] = [
     icon: TbLogout2,
     url: '#',
     class: 'text-danger fw-semibold',
+    action:'logout'
   },
 ]
 
