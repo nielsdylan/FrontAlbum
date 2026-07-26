@@ -545,7 +545,7 @@ const Albumes = () => {
   return (
     <div>
       <Container fluid>
-        <PageBreadcrumb title="Gestion de Álbumes" subtitle="" />
+        <PageBreadcrumb title="Gestion de Álbumes" subtitle="" modulo="Panel Control" />
 
         <Row className="justify-content-center">
           <Col xxl={8}>

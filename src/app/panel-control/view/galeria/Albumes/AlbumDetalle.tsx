@@ -74,7 +74,7 @@ const AlbumDetalle = () => {
   return (
     <div>
       <Container fluid>
-        <PageBreadcrumb title="Gestion de fotos del album" subtitle="" />
+        <PageBreadcrumb title="Gestion de fotos del album" subtitle=""  modulo="Panel Control"/>
         <CardImageLink />
         
       </Container>

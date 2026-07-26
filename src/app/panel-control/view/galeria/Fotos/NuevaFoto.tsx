@@ -197,7 +197,7 @@ const NuevaFoto = () => {
   return (
     <div>
       <Container fluid>
-        <PageBreadcrumb title="Agregar nueva foto" subtitle="" />
+        <PageBreadcrumb title="Agregar nueva foto" subtitle="" modulo="Panel Control" />
         <Row className="justify-content-center">
           <Col xxl={8}>
             <form onSubmit={handleSubmit}>

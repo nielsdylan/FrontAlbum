@@ -75,7 +75,7 @@ const Fotos = () => {
     return (
         <div>
             <Container fluid>
-                <PageBreadcrumb title="Gestion de fotos" subtitle="" />
+                <PageBreadcrumb title="Gestion de fotos" subtitle=""  modulo="Panel Control" />
                 {/* <CardImageLink /> */}
                 <Row>
                     <Col xxl={2}>

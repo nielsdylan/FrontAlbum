@@ -21,7 +21,7 @@ const ListPlantilla = () => {
   return (
     <div>
         <Container fluid>
-            <PageBreadcrumb title="Gestion de Plantillas" subtitle="" />
+            <PageBreadcrumb title="Gestion de Plantillas" subtitle="" modulo="Panel Control" />
 
             <Row className="justify-content-center">
                 <Col xxl={2}>
