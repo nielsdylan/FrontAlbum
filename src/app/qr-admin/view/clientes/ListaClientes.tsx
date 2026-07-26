@@ -61,24 +61,24 @@ const CardTable = () => {
             <OverlayTrigger
               placement="top"
               overlay={
-                <Tooltip id={`tooltip-${rowData.id}`} className="danger-tooltip">
+                <Tooltip id={`tooltip-${rowData.persona_id}`} className="danger-tooltip">
                   Editar registro.
                 </Tooltip>
               }
             >
-              <button className="btn btn-sm btn-outline-default btn-icon rounded" onClick={() => handleEdit(Number(rowData.id))}>
+              <button className="btn btn-sm btn-outline-default btn-icon rounded" onClick={() => handleEdit(Number(rowData.persona_id))}>
                 <TbEdit className="fs-lg" />
               </button>
             </OverlayTrigger>
             <OverlayTrigger
               placement="top"
               overlay={
-                <Tooltip id={`tooltip-${rowData.id}`} className="danger-tooltip">
+                <Tooltip id={`tooltip-${rowData.persona_id}`} className="danger-tooltip">
                   Inactivar registro.
                 </Tooltip>
               }
             >
-              <button className="btn btn-sm btn-outline-default btn-icon rounded" onClick={() => handleDelet(Number(rowData.id)) }>
+              <button className="btn btn-sm btn-outline-default btn-icon rounded" onClick={() => handleDelet(Number(rowData.persona_id)) }>
                 <TbTrash className="fs-lg" />
               </button>
             </OverlayTrigger>
@@ -90,7 +90,7 @@ const CardTable = () => {
     }
   ]
   // DECLARAMOS LAS VARIABLES USESTATE
-  const [formData, setFormData] = useState({ id: 0, titulo: "", descripcion:"", palabras:"", plantilla_id: 0 }); // variable donde se guarda el formulario 
+  const [formData, setFormData] = useState({ id: 0, numero_documento: "", nombres:"", apellidos:"", telefono: null as number | null , email: "", password:"" }); // variable donde se guarda el formulario 
   const [dataJson, setDataJson] = useState<Cliente[]>([]); // donde se guarda el json que se trae del backend
   // ------- Control del estado de pagionas 
   const [currentPage, setCurrentPage] = useState(1);
@@ -188,11 +188,13 @@ const CardTable = () => {
   // CREAR NUEVO REGISTRO
   const handleNew = async (id: number) => {
     setFormData({
-      id: id, // Asegúrate de que 'nombre' exista en el objeto Nivel
-      titulo: "", // Asegúrate de que 'nombre' exista en el objeto Nivel
-      descripcion:"",
-      palabras:"",
-      plantilla_id: 0
+      id: id, 
+      numero_documento: "", 
+      nombres: "",
+      apellidos: "",
+      telefono: null,
+      email: "",
+      password: "",
       
     });
     setTextModal("Nuevo Album")
@@ -229,11 +231,13 @@ const CardTable = () => {
     const respons: Cliente = await verData(id);
 
     setFormData({
-      id: respons.id, // Asegúrate de que 'nombre' exista en el objeto Nivel
-      titulo: respons.titulo, // Asegúrate de que 'nombre' exista en el objeto Nivel
-      descripcion: respons.descripcion,
-      palabras: respons.palabras,
-      plantilla_id: respons.plantilla_id
+      id: respons.id, // Asegúrate de que 'id' exista en el objeto Nivel
+      numero_documento: respons.persona.numero_documento, 
+      nombres: respons.persona.nombres,
+      apellidos: respons.persona.apellidos,
+      telefono: respons.persona.telefono,
+      email: respons.email,
+      password: ""
     });
     setTextModal("Editar Album")
     
@@ -404,39 +408,18 @@ const CardTable = () => {
         </ModalHeader>
         <form onSubmit={handleSubmit}>
           <ModalBody>
-            {/* <div className="row">
-              <div className="col-md-12">
-                <FormLabel htmlFor="plantilla_id" className="col-form-label">
-                  Plantilla:
-                </FormLabel>
-                <Form.Select 
-                  id="plantilla_id"
-                  name="plantilla_id"
-                  value={formData.plantilla_id} // 1. Vincula el valor al estado del formulario
-                  onChange={handleChange}     // 2. Escucha los cambios cuando el usuario seleccione otra
-                  className="form-select form-select-sm"
-                >
-                  <option>Seleccione...</option>
-                  {listaPlantillas.map((plantilla) => (
-                    <option key={plantilla.id} value={plantilla.id}>
-                      {plantilla.titulo}
-                    </option>
-                  ))}
-                </Form.Select>
-              </div>
-            </div> */}
             <div className="row">
               <div className="col-md-12">
-                <FormLabel htmlFor="titulo" className="col-form-label">
-                  Titulo:
+                <FormLabel htmlFor="numero_documento" className="col-form-label">
+                  Numero de Documento:
                 </FormLabel>
                 <FormControl
                   type="text"
                   className="form-control form-control-sm"
-                  id="titulo"
-                  name="titulo"
+                  id="numero_documento"
+                  name="numero_documento"
                   placeholder="Ingresa tu titulo..."
-                  value={formData.titulo}
+                  value={formData.numero_documento}
                   onChange={handleChange}
                   required
                 />
@@ -445,18 +428,17 @@ const CardTable = () => {
             
             <div className="row">
               <div className="col-md-12">
-                <FormLabel htmlFor="descripcion" className="col-form-label">
-                  Descripción:
+                <FormLabel htmlFor="apellidos" className="col-form-label">
+                  Apellidos:
                 </FormLabel>
                 
                 <FormControl
-                  as="textarea"
-                  type="file"
+                  type="text"
                   className="form-control form-control-sm"
-                  id="descripcion"
-                  name="descripcion"
-                  placeholder="Ingresa tu descripcion..."
-                  value={formData.descripcion}
+                  id="apellidos"
+                  name="apellidos"
+                  placeholder="Ingresa tus apellidos..."
+                  value={formData.apellidos}
                   onChange={handleChange}
                   required
                 />
@@ -464,23 +446,77 @@ const CardTable = () => {
             </div>
             <div className="row">
               <div className="col-md-12">
-                <FormLabel htmlFor="palabras" className="col-form-label">
-                  Reseña/Palabras:
+                <FormLabel htmlFor="nombres" className="col-form-label">
+                  Nombres:
                 </FormLabel>
                 
                 <FormControl
-                  as="textarea"
-                  type="file"
+                  type="text"
                   className="form-control form-control-sm"
-                  id="palabras"
-                  name="palabras"
-                  placeholder="Ingresa tu descripcion..."
-                  value={formData.palabras}
+                  id="nombres"
+                  name="nombres"
+                  placeholder="Ingresa tus nombres..."
+                  value={formData.nombres}
                   onChange={handleChange}
                   required
                 />
               </div>
             </div>
+            <div className="row">
+              <div className="col-md-12">
+                <FormLabel htmlFor="telefono" className="col-form-label">
+                  Telefono:
+                </FormLabel>
+                
+                <FormControl
+                  type="number"
+                  className="form-control form-control-sm"
+                  id="telefono"
+                  name="telefono"
+                  placeholder="Ingresa tus nombres..."
+                  value={formData.telefono}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+            </div>
+            <div className="row">
+              <div className="col-md-12">
+                <FormLabel htmlFor="email" className="col-form-label">
+                  Email:
+                </FormLabel>
+                
+                <FormControl
+                  type="email"
+                  className="form-control form-control-sm"
+                  id="email"
+                  name="email"
+                  placeholder="Ingresa tu email..."
+                  value={formData.email}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+            </div>
+            <div className="row">
+              <div className="col-md-12">
+                <FormLabel htmlFor="password" className="col-form-label">
+                  Password:
+                </FormLabel>
+                
+                <FormControl
+                  type="password"
+                  className="form-control form-control-sm"
+                  id="password"
+                  name="password"
+                  placeholder="*********"
+                  value={formData.password}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+            </div>
+            
           </ModalBody>
           <ModalFooter>
             <Button variant="default" onClick={toggleModal} className="btn-sm">

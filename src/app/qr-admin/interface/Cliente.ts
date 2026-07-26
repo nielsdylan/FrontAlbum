@@ -1,16 +1,13 @@
 export interface Cliente {
   id: number;
-  titulo: string;
-  descripcion: string;
+  email: string;
+  name: string;
   estado: number;
-  plantilla_id: number;
-  palabras: string;
-  usuario_id: number;
   persona: Persona;
 }
 export interface Persona {
   id: number;
-  numero_documento: number;
+  numero_documento: string;
   nombres: string;
   apellidos: string;
   telefono: number;
