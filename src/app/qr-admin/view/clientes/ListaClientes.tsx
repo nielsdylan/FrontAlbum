@@ -7,7 +7,7 @@ import DataTable, {type  DataTableRef } from 'datatables.net-react'
 import 'datatables.net-responsive'
 import 'datatables.net-select'
 import ReactDOMServer from 'react-dom/server'
-import { TbChevronLeft, TbChevronRight, TbChevronsLeft, TbChevronsRight, TbEdit, TbPlus, TbQrcode, TbTrash } from 'react-icons/tb'
+import { TbChevronLeft, TbChevronRight, TbChevronsLeft, TbChevronsRight, TbEdit, TbPlus, TbTrash } from 'react-icons/tb'
 import { createRoot } from 'react-dom/client'
 import { useEffect, useRef, useState } from 'react'
 import useToggle from '@/hooks/useToggle'
@@ -90,7 +90,7 @@ const CardTable = () => {
     }
   ]
   // DECLARAMOS LAS VARIABLES USESTATE
-  const [formData, setFormData] = useState({ id: 0, numero_documento: "", nombres:"", apellidos:"", telefono: null as number | null , email: "", password:"" }); // variable donde se guarda el formulario 
+  const [formData, setFormData] = useState({ id: 0, numero_documento: "", nombres:"", apellidos:"", telefono: "" , email: "", password:"" }); // variable donde se guarda el formulario 
   const [dataJson, setDataJson] = useState<Cliente[]>([]); // donde se guarda el json que se trae del backend
   // ------- Control del estado de pagionas 
   const [currentPage, setCurrentPage] = useState(1);
@@ -103,9 +103,9 @@ const CardTable = () => {
   const { isTrue: isOpen, toggle: toggleModal } = useToggle(); // variable para abrir y cerrar el modal
   // const [listaPlantillas, setListaPlantillas] = useState<Plantilla[]>([]);
   // Modal 2: QR (El que se ve en image_e8d4e4.png)
-  const { isTrue: isOpenQR, toggle: toggleModalQR } = useToggle();
-  const [imgQR, setImgQR] = useState("");
-  const [linkQR, setLinkQR] = useState("");
+  // const { isTrue: isOpenQR, toggle: toggleModalQR } = useToggle();
+  // const [imgQR, setImgQR] = useState("");
+  // const [linkQR, setLinkQR] = useState("");
   DataTable.use(DT)
   const tableRef = useRef<DataTableRef | null>(null)
   // ---- evento que carga al inciar la pagian useEffect --
@@ -192,7 +192,7 @@ const CardTable = () => {
       numero_documento: "", 
       nombres: "",
       apellidos: "",
-      telefono: null,
+      telefono: "",
       email: "",
       password: "",
       
@@ -231,7 +231,7 @@ const CardTable = () => {
     const respons: Cliente = await verData(id);
 
     setFormData({
-      id: respons.id, // Asegúrate de que 'id' exista en el objeto Nivel
+      id: respons.persona.id, // Asegúrate de que 'id' exista en el objeto Nivel
       numero_documento: respons.persona.numero_documento, 
       nombres: respons.persona.nombres,
       apellidos: respons.persona.apellidos,
@@ -289,7 +289,7 @@ const CardTable = () => {
   //   setLinkQR(respons.link)
   // };
   return (
-    <ComponentCard title="Lista de Albumes">
+    <ComponentCard title="Lista de Clientes">
       <Button variant="secondary" className="mb-3 btn-sm" onClick={() => handleNew(0) }>
         <TbPlus className="fs-lg" /> 
         Nuevo
@@ -474,7 +474,7 @@ const CardTable = () => {
                   id="telefono"
                   name="telefono"
                   placeholder="Ingresa tus nombres..."
-                  value={formData.telefono}
+                  value={formData.telefono?? ""}
                   onChange={handleChange}
                   required
                 />
@@ -512,7 +512,7 @@ const CardTable = () => {
                   placeholder="*********"
                   value={formData.password}
                   onChange={handleChange}
-                  required
+                  required={!formData.id || formData.id === 0}
                 />
               </div>
             </div>
@@ -528,31 +528,6 @@ const CardTable = () => {
             </Button>
           </ModalFooter>
         </form>
-      </Modal>
-      {/* modal de qr---------------------------------------------------------------------- */}
-      <Modal
-        className="fade"
-        show={isOpenQR}
-        onHide={toggleModalQR}
-        backdrop="static"
-        keyboard={false}
-      >
-        <ModalHeader closeButton>
-          <ModalTitle as="h5">QR</ModalTitle>
-        </ModalHeader>
-            <ModalBody>
-                <div className="row">
-                <div className="col-md-12 text-center">
-                    <img src={`data:image/png;base64,${imgQR}`} alt="Código QR" />
-                </div>
-                </div>
-            </ModalBody>
-            <ModalFooter>
-                <Button variant="default" onClick={toggleModalQR} className="btn-sm">
-                    Cerrar
-                </Button>
-                <a href={linkQR} target="_blank" rel="noopener noreferrer" className="btn-sm btn-success btn">Ver plantilla</a>
-            </ModalFooter>
       </Modal>
     </ComponentCard>
   )

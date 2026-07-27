@@ -10,6 +10,6 @@ export interface Persona {
   numero_documento: string;
   nombres: string;
   apellidos: string;
-  telefono: number;
+  telefono: string;
   estado: number;
 }
