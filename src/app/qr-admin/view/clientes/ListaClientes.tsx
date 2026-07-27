@@ -78,7 +78,7 @@ const CardTable = () => {
                 </Tooltip>
               }
             >
-              <button className="btn btn-sm btn-outline-default btn-icon rounded" onClick={() => handleDelet(Number(rowData.persona_id)) }>
+              <button className="btn btn-sm btn-outline-default btn-icon rounded" onClick={() => handleDelet(Number(rowData.id), rowData.estado === 0 ? 1 : 0) }>
                 <TbTrash className="fs-lg" />
               </button>
             </OverlayTrigger>
@@ -245,7 +245,7 @@ const CardTable = () => {
   };
   // ELIMINAR UN REGISTRO
   const ReactSwal = withReactContent(Swal);
-  const handleDelet =  (id: number) => {
+  const handleDelet =  (id: number, estado: number) => {
     ReactSwal.fire({
       title: "Alerta",
       text: "¿Esta seguro de Inactivar este registro?",
@@ -262,7 +262,7 @@ const CardTable = () => {
       if (result.isConfirmed) {
         const data = {
           id: id,
-          estado: 0
+          estado: estado
         };
         const respons = await inactivarData(data);
         fetchLista(currentPage);

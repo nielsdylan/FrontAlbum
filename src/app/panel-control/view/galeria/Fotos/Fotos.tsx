@@ -1,11 +1,14 @@
 import type { Paginate } from "@/app/panel-control/interface/BackEndPaginate";
 import type { Image } from "@/app/panel-control/interface/galeria/Image";
-import { listarData } from "@/app/panel-control/services/galeria/FotoService";
+import { inactivarData, listarData } from "@/app/panel-control/services/galeria/FotoService";
 import PageBreadcrumb from "@/components/PageBreadcrumb";
 import { useEffect, useState } from "react";
 import { Col, Container, Modal, ModalBody, ModalHeader, ModalTitle, Row } from "react-bootstrap";
 import { Link } from "react-router";
 import useToggle from '@/hooks/useToggle'
+import { sweet } from '@/utils/alerts'
+import withReactContent from 'sweetalert2-react-content'
+import Swal from 'sweetalert2'
 
 const IMG_URL = import.meta.env.VITE_APP_IMG_URL;
 
@@ -72,6 +75,38 @@ const Fotos = () => {
             
         }
     };
+
+    const ReactSwal = withReactContent(Swal);
+    const eliminarImagen =  (id: number) => {
+    ReactSwal.fire({
+        title: "Alerta",
+        text: "¿Esta seguro de Eliminar este registro?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Si, eliminar!",
+        showCloseButton: true,
+        buttonsStyling: false,
+        customClass: {
+        confirmButton: "btn btn-success me-2 mt-2",
+        cancelButton: "btn btn-danger mt-2",
+        },
+    }).then( async (result) => {
+        if (result.isConfirmed) {
+        const data = {
+            id: id,
+            estado: 0
+        };
+        const respons = await inactivarData(data);
+        listaFotos(1);
+        sweet({
+            title: respons.title,
+            text: respons.text,
+            icon: respons.icon,
+            customClass: { confirmButton: "btn btn-"+respons.icon },
+        });
+        }
+    });
+    };
     return (
         <div>
             <Container fluid>
@@ -123,6 +158,14 @@ const Fotos = () => {
                                         }}
                                         onClick={() => verImagen(data.path)}
                                     > Ver </button>
+                                    <button
+                                        className="btn btn-light btn-sm"
+                                        style={{
+                                            fontWeight: 'bold',
+                                            boxShadow: '0 2px 5px rgba(0,0,0,0.2)'
+                                        }}
+                                        onClick={() => eliminarImagen(data.id)}
+                                    > Eliminar </button>
                                 </div>
                             </div>
                         </Col>

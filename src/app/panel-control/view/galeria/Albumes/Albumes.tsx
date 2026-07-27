@@ -87,7 +87,7 @@ const CardTable = () => {
               placement="top"
               overlay={
                 <Tooltip id={`tooltip-${rowData.id}`} className="danger-tooltip">
-                  Inactivar registro.
+                  Eliminar registro.
                 </Tooltip>
               }
             >
@@ -258,7 +258,7 @@ const CardTable = () => {
   const handleDelet =  (id: number) => {
     ReactSwal.fire({
       title: "Alerta",
-      text: "¿Esta seguro de Inactivar este registro?",
+      text: "¿Esta seguro de Eliminar este registro?",
       icon: "warning",
       showCancelButton: true,
       confirmButtonText: "Si, eliminar!",

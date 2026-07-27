@@ -36,7 +36,7 @@ const qrAuth = () => {
     } finally {
       setLoading(false);
       // console.log("finally", loading);
-      navigate("/qr-admin/dashboard");
+      navigate("/qr-admin");
     }
   };
   return (

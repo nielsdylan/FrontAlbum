@@ -26,7 +26,6 @@ const Index = () => {
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
-    console.log(API_URL);
 
     try {
       // Reemplaza la URL con la de tu API
@@ -38,7 +37,7 @@ const Index = () => {
     } finally {
       setLoading(false);
       // console.log("finally", loading);
-      navigate("/panel-control/dashboard");
+      navigate("/panel-control");
     }
   };
   return (
