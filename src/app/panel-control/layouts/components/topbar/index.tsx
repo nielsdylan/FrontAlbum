@@ -87,7 +87,7 @@ const Topbar = () => {
 
           <UserProfile />
 
-          {/* <CustomizerToggler /> */}
+          <CustomizerToggler />
         </div>
       </Container>
     </header>

@@ -28,14 +28,16 @@
 
 // Auth Page Side Image
 .card-side-img {
-    background-image: url("../../images/auth.jpg");
-    background-position: center;
+    // background-image: url("../../images/auth.jpg");
+    background-image: url("../../images/auth-imagen.png");
+    background-position: right;
     background-repeat: no-repeat;
     background-size: cover;
 }
 
 .auth-overlay {
-    background: linear-gradient(to top, #313a46, rgba(49,58,70, 0.8), rgba(49,58,70, 0.5));
+    // background: linear-gradient(to top, #313a46, rgba(49,58,70, 0.8), rgba(49,58,70, 0.5));
+    background: linear-gradient(to top, #313a46c2, rgb(49 58 70 / 8%), rgb(49 58 70 / 16%));
 }
 
 // Dark mode

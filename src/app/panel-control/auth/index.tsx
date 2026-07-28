@@ -45,7 +45,7 @@ const Index = () => {
       <Row className="w-100 g-0">
         <Col md={"auto"}>
           <Card className="auth-box-form border-0 mb-0">
-            <div
+            {/* <div
               className="position-absolute top-0 end-0"
               style={{ width: 180 }}
             >
@@ -192,15 +192,14 @@ const Index = () => {
                   </clipPath>
                 </defs>
               </svg>
-            </div>
+            </div> */}
             <CardBody className="min-vh-100 d-flex flex-column justify-content-center">
               <div className="auth-brand mb-0 text-center">
                 <AppLogo />
               </div>
               <div className="mt-auto">
                 <p className="text-muted text-center auth-sub-text mx-auto">
-                  Let’s get you signed in. Enter your email and password to
-                  continue.
+                  Bienvenidos a <strong>ETERNVM</strong> , ingrese su usuario y contraseña.
                 </p>
                 <form className="mt-4" onSubmit={handleSubmit}>
                   <div className="mb-3">
@@ -238,7 +237,7 @@ const Index = () => {
                       <LuKeyRound className="app-search-icon text-muted" />
                     </div>
                   </div>
-                  <div className="d-flex justify-content-between align-items-center mb-3">
+                  {/* <div className="d-flex justify-content-between align-items-center mb-3">
                     <div className="form-check">
                       <input
                         className="form-check-input form-check-input-light fs-14"
@@ -256,7 +255,7 @@ const Index = () => {
                     >
                       Forgot Password?
                     </Link>
-                  </div>
+                  </div> */}
                   <div className="d-grid">
                     <button
                       type="submit"
@@ -271,7 +270,7 @@ const Index = () => {
                 New here?{" "}
                 <Link
                   to="/auth-2/sign-up"
-                  className="text-decoration-underline link-offset-3 fw-semibold"
+                  className="text-primary link-offset-3 fw-semibold"
                 >
                   Create an account
                 </Link>

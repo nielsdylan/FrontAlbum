@@ -4,13 +4,13 @@ export const currency: CurrencyType = '$'
 
 export const currentYear = new Date().getFullYear()
 
-export const appName = 'UBold'
-export const appTitle = 'UBold - Responsive Bootstrap 5 Admin Dashboard'
+export const appName = 'ETERNVUM'
+export const appTitle = 'ETERNVUM - Software de  de Memorias y Albums'
 export const appDescription: string =
-  'UBold is a modern, responsive admin dashboard available on ThemeForest. Ideal for building CRM, CMS, project management tools, and custom web applications with a clean UI, flexible layouts, and rich features.'
+  'ETERNVUM es un software moderno e intuitivo diseñado para la preservación de recuerdos digitales. La herramienta perfecta para crear álbumes fotográficos, personalizar plantillas y eternizar los momentos más memorables de tus seres queridos.'
 
-export const author: string = 'Coderthemes'
-export const authorWebsite: string = 'https://coderthemes.com/'
+export const author: string = 'QR Technology'
+export const authorWebsite: string = '#'
 export const authorContact: string = ''
 
 export const basePath: string = ''
