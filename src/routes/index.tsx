@@ -5,7 +5,7 @@ import {Navigate, type RouteObject} from 'react-router'
 // -------------
 // RUTAS DE LOS COMPONENTES --------------------------
 const Auth2SignIn   = lazy(() => import('@/app/panel-control/auth/index'))
-const Dashboard     = lazy(() => import('@/views/dashboards/dashboard'))
+const Dashboard     = lazy(() => import('@/app/panel-control/view/Dashboard'))
 
 
 // -------------

@@ -1,7 +1,7 @@
 
-import logoDark from '@/assets/images/logo-black.png'
-import logoSm from '@/assets/images/logo-sm.png'
-import logo from '@/assets/images/logo.png'
+import logoDark from '@/assets/images/ETERNVM-SF.png'
+import logoSm from '@/assets/images/ETERNVM-SF.png'
+import logo from '@/assets/images/ETERNVM-SF.png'
 import { useLayoutContext } from '@/context/useLayoutContext'
 import AppMenu from '@/app/panel-control/layouts/components/sidenav/components/AppMenu'
 import UserProfile from '@/app/panel-control/layouts/components/sidenav/components/UserProfile'
@@ -25,10 +25,10 @@ const Sidenav = () => {
 
   return (
     <div className="sidenav-menu">
-      <Link to="/" className="logo">
+      <Link to="/panel-control" className="logo">
         <span className="logo logo-light">
           <span className="logo-lg">
-            <img src={logo} alt="logo"  />
+            <img src={logo} alt="logo" style={{height: "65px"}}  />
           </span>
           <span className="logo-sm">
             <img src={logoSm} alt="small logo" />
@@ -37,7 +37,7 @@ const Sidenav = () => {
 
         <span className="logo logo-dark">
           <span className="logo-lg">
-            <img src={logoDark} alt="dark logo"  />
+            <img src={logoDark} alt="dark logo" style={{height: "65px"}} />
           </span>
           <span className="logo-sm">
             <img src={logoSm} alt="small logo" />

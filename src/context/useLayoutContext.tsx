@@ -37,23 +37,8 @@ import type {
 //   position: 'fixed',
 //   width: 'fluid',
 // }
-const INIT_STATE: LayoutState = {
-  "skin":"flat",
-  "theme":"light",
-  "monochrome":false,
-  "orientation":"vertical",
-  "sidenav":{
-    "size":"default",
-    "color":"light",
-    "user":false,
-    "isMobileMenuOpen":false
-  },
-  "topBar":{
-    "color":"dark"
-  },
-  "position":"fixed",
-  "width":"fluid"
-}
+const INIT_STATE: LayoutState = {"skin":"default","theme":"light","monochrome":false,"orientation":"vertical","sidenav":{"size":"default","color":"dark","user":false,"isMobileMenuOpen":false},"topBar":{"color":"light"},"position":"fixed","width":"fluid"}
+
 
 const LayoutContext = createContext<LayoutType | undefined>(undefined)
 
