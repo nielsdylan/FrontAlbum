@@ -115,14 +115,14 @@ export const menuItems: MenuItemType[] = [
   * Menu de modullo del album de fotos
   *
   */
-  { key: 'admin', label: 'Modulos', isTitle: true },
+  { key: 'modulos', label: 'Modulos', isTitle: true },
   {
     key: 'galeria',
     label: 'Galeria',
     icon: LuPanelTop,
     children: [
-      { key: 'dark-topbar', label: 'Fotos', url: '/panel-control/galeria/fotos' },
-      { key: 'dark-topbar', label: 'Albumes', url: '/panel-control/galeria/albumes' },
+      { key: 'fotos', label: 'Fotos', url: '/panel-control/galeria/fotos' },
+      { key: 'albumes', label: 'Albumes', url: '/panel-control/galeria/albumes' },
     ],
   },
   { key: 'plantillas', label: 'Plantillas', icon: LuCircleGauge, url: '/panel-control/plantillas' },
