@@ -1,9 +1,10 @@
 import PageBreadcrumb from '@/components/PageBreadcrumb'
-import { Col, Container, Row } from 'react-bootstrap'
+import { Button, Col, Container, Row } from 'react-bootstrap'
 import ComponentCard from '@/components/cards/ComponentCard'
 import CustomApexChart from '@/components/CustomApexChart.tsx'
 import { getColor } from '@/helpers/color'
 import type { ApexOptions } from 'apexcharts'
+import { useState } from 'react'
 
 const GraficaLineas = () => {
     const getLineChart = (): ApexOptions => ({
@@ -86,6 +87,66 @@ const GraficaLineas = () => {
         </ComponentCard>
     )
 }
+
+const GraficoEspacio = () => {
+    const randomize = (series: number[]) => series.map(() => Math.floor(Math.random() * 100) + 1)
+    const appendData = (series: number[]) => [...series.map(() => Math.floor(Math.random() * 100) + 1), Math.floor(Math.random() * 100) + 1]
+
+    const removeData = (series: number[]) => series.slice(0, -1)
+    const initialSeries = [64, 75, 33, 53]
+    const getDonutOptions = (series: number[]): ApexOptions => ({
+        chart: {
+            type: 'donut',
+            height: 320,
+        },
+        dataLabels: {
+            enabled: false,
+        },
+        series,
+        legend: {
+            show: true,
+            position: 'bottom',
+            horizontalAlign: 'center',
+            floating: false,
+            fontSize: '14px',
+            offsetY: 7,
+        },
+        colors: [getColor('purple'), getColor('warning'), getColor('danger'), getColor('info')],
+        responsive: [
+            {
+            breakpoint: 600,
+            options: {
+                chart: {
+                height: 240,
+                },
+                legend: {
+                show: false,
+                },
+            },
+            },
+        ],
+    })
+    const [series, setSeries] = useState<number[]>(initialSeries)
+    return (
+        <ComponentCard title="Donut Update">
+            <CustomApexChart getOptions={() => getDonutOptions(series)} series={series} type="donut" height={320} />
+            <div className="text-center mt-2 d-flex justify-content-center gap-2 flex-wrap">
+              <Button variant="primary" size="sm" onClick={() => setSeries(randomize(series))}>
+                RANDOMIZE
+              </Button>
+              <Button variant="primary" size="sm" onClick={() => setSeries(appendData(series))}>
+                ADD
+              </Button>
+              <Button variant="primary" size="sm" onClick={() => setSeries(removeData(series))}>
+                REMOVE
+              </Button>
+              <Button variant="primary" size="sm" onClick={() => setSeries(initialSeries)}>
+                RESET
+              </Button>
+            </div>
+        </ComponentCard>
+    )
+}
 const Dashboard = () => {
 
   return (
@@ -99,7 +160,7 @@ const Dashboard = () => {
             </Col>
 
             <Col md={4}>
-
+                <GraficoEspacio></GraficoEspacio>
             </Col>
         </Row>
         <Row>
