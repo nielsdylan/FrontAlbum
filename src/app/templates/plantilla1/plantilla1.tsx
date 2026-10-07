@@ -162,7 +162,7 @@ const plantilla1 = () => {
 
     const listaFotos = async (id: number, album_id:number) => {
         // const respons: Image[] = await todasFotos(id,album_id);
-        const respons = await todasFotos(id,album_id);
+        const respons = await todasFotos(id,album_id,1);
         setDataJson(respons.imagenes)
         setAlbum(respons.album)
         console.log(album);
